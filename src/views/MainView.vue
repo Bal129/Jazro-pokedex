@@ -1,7 +1,7 @@
 <template>
-    <header class="py-2 bg-dark" id="navbarHeader">
+    <header class="py-2 bg-dark fixed-top" id="navbarHeader">
 		<div class="container d-flex justify-content-between">
-			<h2 class="text-light">Logo</h2>
+			<h2 class="text-light">Pokedex</h2>
             <input type="text" placeholder="Search..." v-model="target"/>
 			
 			<!-- <div class="row">
@@ -17,6 +17,7 @@
     
     <section>
         <div class="container bg-light">
+            <div class="row py-5" id="topAnchor"></div>
             <div class="row py-3">
                 <h1 class="text-center">Welcome</h1>
                 <h3 class="text-muted text-center">This is a list of Pokemons from index 1 to {{numOfPokemon}}</h3>
@@ -44,20 +45,13 @@
         </div>
     </section>
 
-    <footer>
-        <div class="bg-dark text-muted">
-            <div class="container">
-                <div class="row d-flex justify-content-between">
-                    <p class="text-light p-4">
-                        This is a small project created by 
-                        <i>Ahmad Iqbal Bin Che Shamshudin</i>
-                        for <i>Robot Resources Front-End Challenges</i>
-                        Visit my <a href="https://github.com/Bal129">Github</a> for more projects
-                    </p>
-                </div>
-            </div>
+    <section class="bg-dark fixed-bottom">
+        <div class="container d-flex">
+            <a class="btn text-light  ms-auto" href="#topAnchor">
+                To Top
+            </a>
         </div>
-    </footer>
+    </section>
 
 </template>
 
