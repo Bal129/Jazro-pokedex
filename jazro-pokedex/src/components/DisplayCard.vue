@@ -1,16 +1,16 @@
 <template>
     <div class="card m-2">
         <h3 class="cus-index m-2">
-            #{{ cardData.id }}
+            #{{ props.pokemon.id }}
         </h3>
         <img 
             class="card-img-top" 
-            v-bind:src="cardData.sprite"
+            v-bind:src="props.pokemon.sprite"
             alt="Pokemon sprite"
         />
         <div class="card-body">
             <h3 class="card-title text-center py-1">
-                {{cardData.name}}
+                {{props.pokemon.name}}
             </h3>
             <div>
                 <ul 
@@ -18,7 +18,7 @@
                 >
                     <li 
                         class="list-group-item flex-fill text-center"
-                        v-for="row in cardData.types"
+                        v-for="row in props.pokemon.types"
                     >{{ row.type.name }}</li>
                 </ul>
             </div>
@@ -27,36 +27,37 @@
 </template>
 
 <script setup>
-import { ref, onMounted} from 'vue';
+import { ref, onMounted } from 'vue';
 // import { useCounterStore } from '@/stores/counter';
-const props = defineProps(["id"]);
+const props = defineProps(["pokemon"]);
+
 // const pokemonId = 1;
 // const storeCounter = useCounterStore();
-const cardData = ref({
-    id:0,
-    name:"pokemon",
-    sprite: "n/a",
-    types: {},
-});
+// const cardData = ref({
+//     id:0,
+//     name:"pokemon",
+//     sprite: "n/a",
+//     types: {},
+// });
 
-onMounted(() => {
-    fetchData(props.id);
-});
+// onMounted(() => {
+//     fetchData(props.id);
+// });
 
-function fetchData(id) {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-    .then(response => response.json())
-    .then(data => {
-        cardData.value = {
-            id: data.id,
-            name: capitalize(data.name),
-            sprite: data.sprites.front_default,
-            types: data.types
-        }
-        console.log(cardData.value);
-    })
-    .catch(error => console.error(error));
-}
+// function fetchData(id) {
+//     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
+//     .then(response => response.json())
+//     .then(data => {
+//         cardData.value = {
+//             id: data.id,
+//             name: capitalize(data.name),
+//             sprite: data.sprites.front_default,
+//             types: data.types
+//         }
+//         // console.log(cardData.value);
+//     })
+//     .catch(error => console.error(error));
+// }
 
 // function storeData(data) {
 //     // console.log(data);
@@ -72,9 +73,9 @@ function fetchData(id) {
 //     storeCounter.locations = data.locations;
 // }
 
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.substring(1);
-}
+// function capitalize(string) {
+//     return string.charAt(0).toUpperCase() + string.substring(1);
+// }
 
 </script>
 
