@@ -1,8 +1,8 @@
 <template>
-    <section class="bg-dark fixed-bottom">
+    <section class="custom-bottom-pokeball fixed-bottom">
         <div class="container d-flex">
             <button 
-                class="btn text-light ms-auto" 
+                class="border btn text-dark ms-auto p-2 m-2 bg-light" 
                 @click="scrollToTop">
                 To Top
             </button>

@@ -1,0 +1,104 @@
+.custom-top-pokeball {
+    background-color: red;
+    border-bottom: 0.5em solid black;
+}
+
+.custom-bottom-pokeball {
+    background: white;
+    border-top: 0.5em solid black;
+}
+
+.type-normal {
+    background-color: rgb(163, 163, 163);
+    color: black;
+}
+
+.type-fire {
+    background-color: rgb(255, 25, 25);
+    color: white;
+}
+
+.type-fighting {
+    background-color: rgb(255, 102, 0);
+    color: black;
+}
+
+.type-water {
+    background-color: rgb(37, 113, 253);
+    color: white;
+}
+
+.type-flying {
+    background-color: rgb(123, 191, 255);
+    color: black;
+}
+
+.type-grass {
+    background-color: rgb(2, 155, 48);
+    color: white;
+}
+
+.type-poison {
+    background-color: rgb(191, 63, 250);
+    color: white;
+}
+
+.type-electric {
+    background-color: rgb(255, 225, 54);
+    color: black;
+}
+
+.type-ground {
+    background-color: rgb(194, 153, 107);
+    color: black;
+}
+
+.type-psychic {
+    background-color: rgb(255, 68, 171);
+    color: black;
+}
+
+.type-rock {
+    background-color: rgb(182, 144, 109);
+    color: black;
+}
+
+.type-ice {
+    background-color: rgb(81, 249, 255);
+    color: black;
+}
+
+.type-bug {
+    background-color: rgb(47, 255, 110);
+    color: black;
+}
+
+.type-dragon {
+    background-color: rgb(53, 101, 235);
+    color: black;
+}
+
+.type-ghost {
+    background-color: rgb(72, 42, 80);
+    color: white;
+}
+
+.type-dark {
+    background-color: rgb(122, 83, 82);
+    color: black;
+}
+
+.type-steel {
+    background-color: rgb(110, 136, 143);
+    color: black;
+}
+
+.type-fairy {
+    background-color: rgb(255, 88, 247);
+    color: black;
+}
+
+.type-stellar {
+    background-color: rgb(30, 236, 168);
+    color: black;
+}

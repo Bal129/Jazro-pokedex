@@ -19,7 +19,8 @@
                     <li 
                         class="list-group-item flex-fill text-center"
                         v-for="row in props.pokemon.types"
-                    >{{ row.type.name }}</li>
+                        :class="'type-'.concat(row.type.name)"
+                    >{{ capitalize(row.type.name) }}</li>
                 </ul>
             </div>
         </div>
@@ -27,55 +28,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-// import { useCounterStore } from '@/stores/counter';
 const props = defineProps(["pokemon"]);
 
-// const pokemonId = 1;
-// const storeCounter = useCounterStore();
-// const cardData = ref({
-//     id:0,
-//     name:"pokemon",
-//     sprite: "n/a",
-//     types: {},
-// });
-
-// onMounted(() => {
-//     fetchData(props.id);
-// });
-
-// function fetchData(id) {
-//     fetch(`https://pokeapi.co/api/v2/pokemon/${id}`)
-//     .then(response => response.json())
-//     .then(data => {
-//         cardData.value = {
-//             id: data.id,
-//             name: capitalize(data.name),
-//             sprite: data.sprites.front_default,
-//             types: data.types
-//         }
-//         // console.log(cardData.value);
-//     })
-//     .catch(error => console.error(error));
-// }
-
-// function storeData(data) {
-//     // console.log(data);
-//     // console.log(data.species);
-//     storeCounter.id = data.id;
-//     storeCounter.name = capitalize(data.name);
-//     storeCounter.sprites = data.sprites;
-//     storeCounter.types = data.types;
-//     storeCounter.height = data.height;
-//     storeCounter.weight = data.weight;
-//     storeCounter.abilities = data.abilities;
-//     storeCounter.base_experience = data.c;
-//     storeCounter.locations = data.locations;
-// }
-
-// function capitalize(string) {
-//     return string.charAt(0).toUpperCase() + string.substring(1);
-// }
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1);
+}
 
 </script>
 

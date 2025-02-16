@@ -1,11 +1,11 @@
 <template>
-    <header class="py-2 bg-dark fixed-top" id="navbarHeader">
-		<div class="container d-flex justify-content-between">
-			<h2 class="text-light">Pokedex</h2>
+    <header class="py-2 fixed-top custom-top-pokeball" id="navbarHeader">
+        <div class="container d-flex justify-content-between ">
+            <h2 class="text-light">Pokedex</h2>
             <input type="text" placeholder="Search..." v-model="target"/>
-		</div>
-	</header>
-    
+        </div>
+    </header>
+        
     <section>
         <div class="container bg-light">
             <div class="row py-5"></div>
@@ -15,7 +15,7 @@
                     class="text-muted text-center"
                 >
                     This is a list of Pokemons from index 1 to {{numOfPokemon}}. <br/>
-                    Press one of the Pokemon to view their details or search your favorite Pokemon using the search functionality on top!
+                    Click on one of the Pokemons to view their details or search your favorite Pokemon using the search functionality on top!
                 </h6>
             </div>
             <div class="row py-3">
@@ -34,7 +34,6 @@
     </section>
 
     <ButtonToTop />
-
 </template>
 
 <script setup>
@@ -97,7 +96,5 @@ const searchPokemon = computed(() => {
         pokemon.name.toLowerCase().includes(target.value.toLowerCase())
     );
 });
-
-
 
 </script>
