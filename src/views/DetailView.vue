@@ -1,6 +1,24 @@
 <template>
     <header class="py-2 bg-dark">
-        
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <RouterLink :to="{ name: 'main' }">
+                    <button class="btn text-light">
+                        Home
+                    </button>
+                </RouterLink>
+                <RouterLink :to="{ name: 'detail', params: { id: Number(props.id) - 1 } }">
+                    <button v-if="props.id > 1" class="btn text-light"> <!-- button previous -->
+                        Previous
+                    </button>
+                </RouterLink>
+                <RouterLink :to="{ name: 'detail', params: { id: Number(props.id) + 1 } }">
+                    <button class="btn text-light"> <!-- button next -->
+                        Next
+                    </button>
+                </RouterLink>
+            </div>
+        </div>
     </header>
     <section>
         <div class="container bg-light">
@@ -89,15 +107,28 @@
                     <canvas id="stats-chart"></canvas>
                 </div>
             </div>
+            <div class="row"> <!-- Evolution(s) -->
+                <DisplayCard 
+                    :pokemon="{
+
+                    }"
+                />
+            </div>
         </div>
     </section>
+
+    <ButtonToTop />
+
 </template>
 
 <script setup>
 import { ref, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 import Chart from "chart.js/auto";
+import ButtonToTop from "@/components/ButtonToTop.vue";
+import DisplayCard from "@/components/DisplayCard.vue";
 
-const index = 11;
+const props = defineProps(["id"]);
 
 const pokemonDetailedData = ref({
     id: "0",
@@ -109,7 +140,7 @@ const pokemonDetailedData = ref({
     base_exp: 0,
     height: 0,
     weight: 0,
-    base_stats: 
+    base_stats:
     {
         hp: 0,
         atk: 0,
@@ -118,105 +149,29 @@ const pokemonDetailedData = ref({
         sp_dfs: 0,
         spd: 0
     },
-    evolutions: 
-    {
-        id: "0",
-        name: "Name",
-        sprite: "Sprite",
-        type: {}
-    },
+    growth_rate: "",
+    habitat: "",
+    evolutions: "",
 
+})
+
+const allDisplayCardData = ref([]);
+const displayCardData = ref({
+    id: "0",
+    name: "Name",
+    sprite: "Sprite",
+    types: {},
 })
 
 onMounted(() => {
     fetchData2();
 });
 
-function createStatsChart() {
-    const chartCanvas = document.getElementById("stats-chart");
-    new Chart(chartCanvas, {
-        type: "radar",
-        data: {
-            labels: ["HP", "Attack", "Defense", "Sp-Attack", "Sp-Defense", "Speed"],
-            datasets: [{
-                label: "Base stats",
-                data: [
-                    pokemonDetailedData.value.base_stats.hp,
-                    pokemonDetailedData.value.base_stats.atk,
-                    pokemonDetailedData.value.base_stats.dfs,
-                    pokemonDetailedData.value.base_stats.sp_atk,
-                    pokemonDetailedData.value.base_stats.sp_dfs,
-                    pokemonDetailedData.value.base_stats.spd,
-                ],
-                fill: true,
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgb(255, 99, 132)',
-            }]
-        },
-        // options: {
-        //     scales: {
-        //         r: {
-        //             angleLines: {
-        //                 display: false
-        //             },
-        //             suggestedMin: 50,
-        //             suggestedMax: 100
-        //         }
-        //     }
-        // }
-    });
-}
-
-function fetchData() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/${index}`)
-    .then(response => response.json())
-    .then(data => {
-        pokemonDetailedData.value = {
-            id: data.id,
-            name: data.name,
-            sprite: data.sprites.front_default,
-            types: data.types,
-            abilities: data.abilities,
-            base_stats:
-            {
-                hp: data.stats[0].base_stat,
-                atk: data.stats[1].base_stat,
-                dfs: data.stats[2].base_stat,
-                sp_atk: data.stats[3].base_stat,
-                sp_dfs: data.stats[4].base_stat,
-                spd: data.stats[5].base_stat
-            },
-        }
-    })
-    .catch(error => console.error("Error during fetch data: " + error));
-
-    fetch(`https://pokeapi.co/api/v2/pokemon-species/${index}`)
-    .then(response => response.json())
-    .then(data => {
-        pokemonDetailedData.value = {
-            ...pokemonDetailedData.value,
-            flavor_text: data.flavor_text_entries[0].flavor_text
-        }
-    })
-    .catch(error => console.error("Error during fetch data: " + error));
-
-    // fetch(`https://pokeapi.co/api/v2/evolution-chain/${index}/`)
-    // .then(response => response.json())
-    // .then(data => {
-    //     pokemonDetailedData.value = {
-    //         evolutions:
-    //         {
-    //             id: 
-    //         }
-    //     }
-    // })
-}
-
 const fetchData2 = async() => {
     try {
         // Fetching data from pokemon
 
-        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${index}`);
+        const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${props.id}`);
         const pokemonData = await pokemonResponse.json();
         
         pokemonDetailedData.value = {
@@ -240,17 +195,59 @@ const fetchData2 = async() => {
 
         // Fetching data from pokemon species
 
-        const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${index}`);
+        const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${props.id}`);
         const speciesData = await speciesResponse.json();
         
         pokemonDetailedData.value = {
             ...pokemonDetailedData.value,
             flavor_text: speciesData.flavor_text_entries[0].flavor_text
         };
+
+        // Fetching data from evolution chain
+
+        const evolutionResponse = await fetch(`https://pokeapi.co/api/v2/evolution-chain/${props.id}`);
+        const evolutionData = await evolutionResponse.json();
+
+        pokemonDetailedData.value = {
+            ...pokemonDetailedData.value,
+            evolutions: evolutionData.chain.evolves_to.map(
+                evolution => evolution.species.url
+            ),
+        };
+
+        pokemonDetailedData.value.evolutions.forEach(async evolution => {
+            const evoDisplayCardResponse = await fetch(evolution);
+            const evoDisplayCardData = await evoDisplayCardResponse.json();
+
+            displayCardData.value = {
+                id: evoDisplayCardData.id,
+                name: capitalize(evoDisplayCardData.name),
+                sprite: evoDisplayCardData.sprites.front_default,
+                types: evoDisplayCardData.types
+            }
+            allDisplayCardData.value.push(evoDisplayCardData.value);
+
+            console.log(displayCardData.value);
+        });
+
     } catch (error) {
         console.error("Error during fetch data: " + error);
     }
 }
+
+function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1);
+}
+
+const route = useRoute();
+
+watch(() => 
+    route.params.id,
+    (newId) => {
+        fetchData2();
+    },
+    { immediate: true }
+)
 
 let chartInstance = null;  // To keep track of the chart instance
 
@@ -260,8 +257,6 @@ watch(() => pokemonDetailedData.value.base_stats, (newBaseStats) => {
         if (chartInstance) {
             chartInstance.destroy();  // Destroy previous chart instance if it exists
         }
-
-        console.log(newBaseStats.hp);
         
         const chartCanvas = document.getElementById("stats-chart");
         

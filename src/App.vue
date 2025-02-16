@@ -1,11 +1,6 @@
 <template>
-	<nav>
-	<!-- <RouterLink to="/">Home</RouterLink> -->
-	<RouterLink to="/">Main</RouterLink>
-	<RouterLink to="/detail">detail</RouterLink>
-	</nav>
-
   	<RouterView />
+
 	<footer class="pb-4">
         <div class="bg-dark text-muted">
             <div class="container">

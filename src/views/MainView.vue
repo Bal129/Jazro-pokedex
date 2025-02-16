@@ -3,61 +3,44 @@
 		<div class="container d-flex justify-content-between">
 			<h2 class="text-light">Pokedex</h2>
             <input type="text" placeholder="Search..." v-model="target"/>
-			
-			<!-- <div class="row">
-				<div class="col-4">
-					<h2 class="text-light">Logo</h2>
-				</div>
-				<div class="col-8">
-					<h2 class="text-light float-right">Search Bar</h2>
-				</div>
-			</div> -->
 		</div>
 	</header>
     
     <section>
         <div class="container bg-light">
-            <div class="row py-5" id="topAnchor"></div>
+            <div class="row py-5"></div>
             <div class="row py-3">
                 <h1 class="text-center">Welcome</h1>
-                <h3 class="text-muted text-center">This is a list of Pokemons from index 1 to {{numOfPokemon}}</h3>
+                <h6 
+                    class="text-muted text-center"
+                >
+                    This is a list of Pokemons from index 1 to {{numOfPokemon}}. <br/>
+                    Press one of the Pokemon to view their details or search your favorite Pokemon using the search functionality on top!
+                </h6>
             </div>
             <div class="row py-3">
                 <div  
                     class="col-12 col-md-6 col-lg-3"
                     v-for="pokemon in searchPokemon" :key="pokemon.id"
                 >
-                    <DisplayCard 
-                        :pokemon="pokemon"
-                    />
+                    <RouterLink :to="{ name: 'detail', params: { id: pokemon.id } }">
+                        <DisplayCard 
+                            :pokemon="pokemon"
+                        />
+                    </RouterLink>
                 </div>
             </div>
-            <!-- <ul class="list-group">
-                <li  
-                    class="list-group"
-                    v-for="pokemon in searchPokemon" :key="pokemon.id"
-                >
-                    <DisplayCard 
-                        :pokemon="pokemon"
-                    />
-                </li>
-            </ul> -->
         </div>
     </section>
 
-    <section class="bg-dark fixed-bottom">
-        <div class="container d-flex">
-            <a class="btn text-light  ms-auto" href="#topAnchor">
-                To Top
-            </a>
-        </div>
-    </section>
+    <ButtonToTop />
 
 </template>
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import DisplayCard from "../components/DisplayCard.vue";
+import ButtonToTop from "@/components/ButtonToTop.vue";
 
 const numOfPokemon = 100;
 
@@ -80,11 +63,9 @@ function fetchAllData() {
         const promises = allData.results.map(eachData => 
             fetchEachData(eachData)
         );
-        Promise.all(promises);
-
-        // allData.results.forEach(eachData => {
-        //     fetchEachData(eachData)
-        // })
+        Promise.all(promises).then(() => {
+            allPokemonData.value.sort((a,b) => a.id - b.id);
+        });
     })
     .catch(error => console.error("Error during fetch all data: " + error));
 }
@@ -100,7 +81,7 @@ function fetchEachData(eachData) {
             name: capitalize(data.name),
             sprite: data.sprites.front_default,
             types: data.types
-        }
+        };
         allPokemonData.value.push(pokemonData.value);
     })
     .catch(error => console.error("Error during fetch each data: " + error));
@@ -116,5 +97,7 @@ const searchPokemon = computed(() => {
         pokemon.name.toLowerCase().includes(target.value.toLowerCase())
     );
 });
+
+
 
 </script>
