@@ -1,7 +1,6 @@
 {
   "name": "jazro-pokedex",
   "version": "0.0.0",
-  "private": true,
   "homepage": "https://bal129.github.io/Jazro-pokedex/",
   "type": "module",
   "scripts": {
