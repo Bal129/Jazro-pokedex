@@ -1,15 +1,87 @@
 <template>
-    <div class="row"> <!-- Base stats radar chart -->
-        <div class="row">
-            <h4 class="text-muted">Base Stats</h4>
-        </div>
-        <div class="row custom-chart">
-            <canvas id="stats-chart"></canvas>
-        </div>
-    </div>
+    <canvas ref="statsChart" id="stats-chart"></canvas>
 </template>
 
 <script setup>
+import Chart from "chart.js/auto";
+import { onMounted, onBeforeUnmount, ref } from "vue";
+const props = defineProps({
+    hp: Number,
+    atk: Number,
+    dfs: Number,
+    sp_atk: Number,
+    sp_dfs: Number,
+    spd: Number,
+    color: String
+});
+const statsChart = ref(null);
+let chart = null;
+
+onMounted(() => {
+    chart = new Chart(statsChart.value, {
+        type: "radar",
+        data: {
+            labels: ["HP", "Attack", "Defense", "Sp-Attack", "Sp-Defense", "Speed"],
+            datasets: [{
+                label: "Base stats",
+                data: [
+                    props.hp,
+                    props.atk,
+                    props.dfs,
+                    props.sp_atk,
+                    props.sp_dfs,
+                    props.spd,
+                ],
+                fill: true,
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                borderColor: props.color,
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                r: {
+                    angleLines: {
+                        display: false
+                    },
+                    suggestedMin: 0,
+                    pointLabels: {
+                        font: {
+                            size: 14  // Increase the font size of the axis labels
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    labels: {
+                        font: {
+                            size: 20  // Increase the font size of the legend
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    window.addEventListener("resize", handleResize);
+});
+
+onBeforeUnmount(() => {
+    // Clean up the event listener when the component is unmounted
+    window.removeEventListener("resize", handleResize);
+});
+
+const handleResize = () => {
+    if (chart) {
+        chart.resize(); // Explicitly resize the chart
+        chart.update(); // Re-render the chart to reflect the new size
+    }
+};
+
+</script>
+
+<!-- <script setup>
 import { watch } from 'vue';
 import Chart from "chart.js/auto";
 
@@ -57,4 +129,4 @@ watch(() => props, (newBaseStats) => {
         });
     }
 }, { immediate: true });
-</script>
+</script> -->

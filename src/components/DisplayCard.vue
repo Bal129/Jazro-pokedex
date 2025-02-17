@@ -10,7 +10,7 @@
         />
         <div class="card-body">
             <h3 class="card-title text-center py-1">
-                {{ props.pokemon.name }}
+                {{ capitalize(props.pokemon.name) }}
             </h3>
             <div>
                 <ul 
@@ -28,12 +28,9 @@
 </template>
 
 <script setup>
+import { capitalize } from '@/utils/global.js';
+
 const props = defineProps(["pokemon"]);
-
-function capitalize(string) {
-    return string.charAt(0).toUpperCase() + string.substring(1);
-}
-
 </script>
 
 <style scoped>
