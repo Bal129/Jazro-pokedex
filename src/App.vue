@@ -1,46 +1,59 @@
 <template>
-    <Suspense>
-        <template #default>
-            <div>
-                <RouterView />
-                <footer class="pb-4">
-                    <div class="bg-dark text-muted">
-                        <div class="container">
-                            <div class="row d-flex justify-content-between">
-                                <p class="text-light p-4">
-                                    This is a small project created by 
-                                    <i>Ahmad Iqbal Bin Che Shamshudin</i>
-                                    for <i>Jazari Robot Resources Front-End Challenges</i>
-                                    Visit my <a href="https://github.com/Bal129">Github</a> for more projects
-                                </p>
-                            </div>
-                        </div>
+    <!-- <RouterView /> -->
+     
+        <Suspense>
+            <RouterView></RouterView>
+            <template #fallback>
+                Loading data...
+            </template>
+        </Suspense>
+    
+
+    <!-- <RouterView v-slot="{ Component }">
+        {{ cacheComponent(Component) }}
+        <template v-if="Component || CachedComponent">
+            <Suspense>
+                <component :is="Component || CachedComponent"></component>
+                <template #fallback>
+                    <div class="text-center mt-5">
+                        <h2 id="test">Loading Pokémon Data...</h2>
                     </div>
-                </footer>
-            </div>
-            
+                </template>
+            </Suspense>
         </template>
+    </RouterView> -->
+
+    <!-- <RouterView v-slot="{ Component }">
+        {{ cacheComponent(Component) }}
+        <template v-if="Component || CachedComponent">
+            <Suspense>
+                <component :is="Component || CachedComponent"></component>
+                <template #fallback>
+                    <div class="text-center mt-5">
+                        <h2 id="test">Loading Pokémon Data...</h2>
+                    </div>
+                </template>
+            </Suspense>
+        </template>
+    </RouterView> -->
+
+    <!-- <Suspense>
+        <RouterView/>
         <template #fallback>
-            <!-- insert loading screen here -->
-             <div>
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-                test test test test
-             </div>
+            <div class="text-center mt-5">
+                <h2 id="test">Loading Pokémon Data...</h2>
+            </div>
         </template>
-    </Suspense>
+    </Suspense> -->
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView, useRoute } from 'vue-router';
+import { ref, Suspense, onErrorCaptured } from 'vue';
+
+// const CachedComponent = ref(null);
+// function cacheComponent(Component) {
+//   CachedComponent.value = Component || CachedComponent.value;
+// }
+
 </script>

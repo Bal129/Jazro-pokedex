@@ -1,4 +1,5 @@
 <template>
+
     <header class="py-2 fixed-top custom-top-pokeball" id="navbarHeader">
         <div class="container d-flex justify-content-between ">
             <h2 class="text-light">Pokedex</h2>
@@ -33,6 +34,21 @@
         </div>
     </section>
 
+    <footer class="pb-4">
+        <div class="bg-dark text-muted">
+            <div class="container">
+                <div class="row d-flex justify-content-between">
+                    <p class="text-light p-4">
+                        This is a small project created by 
+                        <i>Ahmad Iqbal Bin Che Shamshudin</i>
+                        for <i>Jazari Robot Resources Front-End Challenges</i>
+                        Visit my <a href="https://github.com/Bal129">Github</a> for more projects
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <ButtonToTop />
 </template>
 
@@ -51,39 +67,38 @@ const pokemonData = ref({
     types: {}
 });
 
-onMounted(() => {
-    fetchAllData();
-});
+async function fetchAllData() {
+    try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${numOfPokemon}`);
+        const data = await response.json();
 
-function fetchAllData() {
-    fetch(`https://pokeapi.co/api/v2/pokemon/?limit=${numOfPokemon}`)
-    .then(response => response.json())
-    .then(allData => {
-        const promises = allData.results.map(eachData => 
-            fetchEachData(eachData)
-        );
-        Promise.all(promises).then(() => {
-            allPokemonData.value.sort((a,b) => a.id - b.id);
-        });
-    })
-    .catch(error => console.error("Error during fetch all data: " + error));
+        const promises = data.results.map(eachData => fetchEachData(eachData));
+        await Promise.all(promises);
+
+        allPokemonData.value.sort((a,b) => a.id - b.id);
+
+        // return new Promise(resolve => setTimeout(resolve, 500));
+    } catch (error) {
+        console.error("Error during fetch all data: " + error);
+    }
 }
 
-function fetchEachData(eachData) {
+async function fetchEachData(eachData) {
     let link = eachData.url;
 
-    return fetch(link)
-    .then(response => response.json())
-    .then(data => {
-        pokemonData.value = {
-            id: data.id,
-            name: capitalize(data.name),
-            sprite: data.sprites.front_default,
-            types: data.types
-        };
-        allPokemonData.value.push(pokemonData.value);
-    })
-    .catch(error => console.error("Error during fetch each data: " + error));
+    try {
+        const eachReponses = await fetch(link);
+        const eachData = await eachReponses.json();
+
+        allPokemonData.value.push({
+            id: eachData.id,
+            name: eachData.name,
+            sprite: eachData.sprites.front_default,
+            types: eachData.types      
+        });        
+    } catch (error) {
+        console.error("Error during fetch each data: " + error);
+    }
 }
 
 function capitalize(string) {
@@ -96,5 +111,7 @@ const searchPokemon = computed(() => {
         pokemon.name.toLowerCase().includes(target.value.toLowerCase())
     );
 });
+
+await fetchAllData();
 
 </script>

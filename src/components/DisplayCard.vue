@@ -10,7 +10,7 @@
         />
         <div class="card-body">
             <h3 class="card-title text-center py-1">
-                {{props.pokemon.name}}
+                {{ props.pokemon.name }}
             </h3>
             <div>
                 <ul 

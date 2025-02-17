@@ -1,8 +1,6 @@
 <template>
-    
-    <Suspense>
-    <template #default>
-        <div>
+    <div v-if="loading">Loading....</div>
+        <div v-else>
             <header class="py-2 custom-top-pokeball">
                 <div class="container">
                     <div class="row">
@@ -170,14 +168,6 @@
 
             <ButtonToTop />
         </div>
-    </template>
-
-    <template #fallback>
-        <div>
-            hi
-        </div>
-    </template>
-    </Suspense>
 </template>
 
 <script setup>
@@ -296,17 +286,23 @@ const fetchData2 = async() => {
             // console.log(displayCardData.value);
         });
 
+        return new Promise(resolve => setTimeout(resolve, 1000));
+
     } catch (error) {
         console.error("Error during fetch data: " + error);
     }
 }
 
 const route = useRoute();
+const loading = ref(true);
 
 watch(() => 
     route.params.id,
     (newId) => {
+        loading.value = true;
+        setTimeout(1000);
         fetchData2();
+        loading.value = false;
     },
     { immediate: true }
 )
@@ -321,10 +317,6 @@ function capitalize(string) {
     )
     .join(' ');
 }
-
-// function capitalize(string) {
-//     return string.charAt(0).toUpperCase() + string.substring(1);
-// }
 
 </script>
 
