@@ -1,5 +1,7 @@
 # Mini Pokedex Project
 
+Welcome to my Mini Pokedex Project. Please take your time here.
+
 ## About
 
 A project created using Vue JS Vite Template. This is a simple Pokedex with minimal functionality. The purpose of this project is to practice Vue Js as well as technical assessment for a job application at Jazari Robot Resources.
@@ -12,16 +14,16 @@ There are two important pages in the project:
 
 ### Main Page
 
-[Display a list of Pokemon and its simple information in card form.](./public/ss-mainpage.png)
+Display a list of Pokemon and its simple information in card form.
+![Main Page](./public/ss-mainpage.png)
 
 User can use a search functionality to filter the Pokemon based on their name.
-| ![Before](./public/ss-searchbefore.png) | ![After](./public/ss-searchafter.png) |
+![Before](./public/ss-searchbefore.png) --> ![After](./public/ss-searchafter.png)
 
 ### Detail Page
 
-[Display some information such as Name, Abilities, Stats etc.](./public/ss-detailpage.png)
-
-There is also a navigation bar on top for better user navigating experience.
+Display some information such as Name, Abilities, Stats etc. There is also a navigation bar on top for better user navigating experience.
+![Detail Page](./public/ss-detailpage.png)
 
 ## Steps to Run Project Locally
 
