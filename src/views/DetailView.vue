@@ -1,124 +1,74 @@
 <template>
-    <div v-if="loading">Loading....</div>
-    <div v-else>
-        <header class="py-2 custom-top-pokeball">
-            <div class="container">
-                <div class="row">
-                    <div class="col-6 d-flex justify-content-start"> <!-- left -->
-                        <RouterLink :to="{ name: 'main' }">
-                            <a class="mx-2 my-1 p-2 btn border text-light">
-                                Home
-                            </a>
-                        </RouterLink>
+    <div>
+        <DetailViewHeader :id="props.id"/>
+        <!-- Loading screen -->
+        <!-- By default, v-if is true, it will only change to false when data fetching is done -->
+        <!-- style="height: 100vh;" used to ensure LoadingView.vue covers the whole screen -->
+        <div 
+            class="d-flex justify-content-center align-items-center"
+            style="height: 100vh;"
+            v-if="loading"
+        >
+            <LoadingView/>
+        </div>
+
+        <!-- Main contents for DetailView.vue -->
+        <!-- This div only visible when loading is false (fetch is done) -->
+        
+        <section v-else class="container bg-light p-5 custom-fade-in">
+            <!-- Extra spacing for visual appeal -->
+            <div class="row py-4"></div>
+
+            <!-- A row to display name -->
+            <div class="row py-3 px-lg-5">
+                <div class="col">
+                    <h1 class="text-center">{{ capitalize(pokemonDetailedData.name) }}</h1>
+                </div>
+            </div>
+            <!-- A row to display profile, abilities and basic info  -->
+            <div class="row px-lg-5 d-flex justify-content-center align-items-center"> <!-- sprite, types, abilities and basic info -->
+                <!-- The left column to display profile (sprite, flavor text, and types) -->
+                <div class="col-md-6 col-lg-6 my-3">
+                    <Profile
+                        :color="pokemonDetailedData.color"
+                        :sprite="pokemonDetailedData.sprite"
+                        :flavor_text="pokemonDetailedData.flavor_text"
+                        :types="pokemonDetailedData.types"
+                    />
+                </div>
+                <!-- The right column to display abilities and basic info -->
+                <div class="col-md-6 col-lg-6 py-4">
+                     <!-- Display abilities -->
+                    <div class="row py-4">
+                        <h4 class="text-muted">Abilities</h4>
+                        <Abilities 
+                            :abilities="pokemonDetailedData.abilities"
+                        />
                     </div>
-                    <div class="col-6 d-flex justify-content-end"> <!-- right -->
-                        <RouterLink :to="{ name: 'detail', params: { id: Number(props.id) - 1 } }">
-                            <a v-if="props.id > 1" class="mx-2 my-1 p-2 btn border text-light"> <!-- button previous -->
-                                Previous
-                            </a>
-                        </RouterLink>
-                        <RouterLink :to="{ name: 'detail', params: { id: Number(props.id) + 1 } }">
-                            <a class="mx-2 my-1 p-2 btn border text-light"> <!-- button next -->
-                                Next
-                            </a>
-                        </RouterLink>
+                    <!-- Display basic information (base exp, height, weight, base happiness -->
+                    <!--                            capture rate, growth rate)               -->
+                    <div class="row py-4">
+                        <h4 class="text-muted">Basic Information</h4>
+                        <BasicInfo
+                            :items="[
+                                {header:'Base Experience',data:pokemonDetailedData.base_exp},
+                                {header:'Height (m)',data:pokemonDetailedData.height},
+                                {header:'Weight (kg)',data:(pokemonDetailedData.weight / 10).toFixed(1)},
+                                {header:'Base Happiness',data:pokemonDetailedData.base_happiness},
+                                {header:'Capture Rate',data:pokemonDetailedData.capture_rate},
+                                {header:'Growth Rate',data:capitalize(pokemonDetailedData.growth_rate)}
+                            ]"
+                        />
                     </div>
                 </div>
             </div>
-        </header>
-        <section class="container bg-light p-5">
-                <div class="row py-3 px-lg-5"> <!-- index and name -->
-                    <div class="col-6"> <!-- index -->
-                        <h1 class="text-muted">#{{ pokemonDetailedData.id }}</h1>
-                    </div>
-                    <div class="col-6"> <!-- name -->
-                        <h1 class="text-end">{{ capitalize(pokemonDetailedData.name) }}</h1>
-                    </div>
-                </div>
-                <div class="row px-lg-5"> <!-- sprite, types, abilities and basic info -->
-                    <div class="col-md-6 col-lg-6">
-                        <div 
-                            class="custom-img-border"
-                            :style="{borderColor:pokemonDetailedData.color}"
-                        > <!-- sprite -->
-                            <div 
-                                class="row m-1 p-4 custom-img-border"
-                            >
-                                <img
-                                    v-bind:src="pokemonDetailedData.sprite" 
-                                    alt="Sprite" 
-                                />
-                            </div>
-                        </div>
-                        <div class="row"> <!-- flavor text -->
-                            <p class="text-muted py-3 text-center">
-                                {{ pokemonDetailedData.flavor_text }}
-                            </p>
-                        </div>
-                        <div class="row"> <!-- types -->
-                            <ul class="list-group list-group-horizontal d-flex justify-content-center">
-                                <li 
-                                    class="list-group-item text-center"
-                                    v-for="row in pokemonDetailedData.types"
-                                    :class="'type-'.concat(row.type.name)"
-                                >{{ capitalize(row.type.name) }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-6 py-4">
-                        <div class="row py-4"> <!-- abilities -->
-                            <h4 class="text-muted">Abilities</h4>
-                            <div>
-                                <ul class="list-group d-flex justify-content-center">
-                                    <li 
-                                        class="list-group-item text-center"
-                                        v-for="(row,index) in pokemonDetailedData.abilities"
-                                    >{{ capitalize(row.ability.name) }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="row py-4"> <!-- basic info -->
-                            <h4 class="text-muted">Basic Information</h4>
-                            <BasicInfo
-                                :items="[
-                                    {header:'Base Experience',data:pokemonDetailedData.base_exp},
-                                    {header:'Height (m)',data:pokemonDetailedData.height},
-                                    {header:'Weight (kg)',data:(pokemonDetailedData.weight / 10).toFixed(1)},
-                                    {header:'Base Happiness',data:pokemonDetailedData.base_happiness},
-                                    {header:'Capture Rate',data:pokemonDetailedData.capture_rate},
-                                    {header:'Growth Rate',data:capitalize(pokemonDetailedData.growth_rate)},
-                                    {header:'Habitat',data:capitalize(pokemonDetailedData.habitat)}
-                                ]"
-                            />
-                        </div>
-                    </div>
 
-                <!-- <StatsChart 
-                    :hp="pokemonDetailedData.base_stats.hp"
-                    :atk="pokemonDetailedData.base_stats.atk"
-                    :dfs="pokemonDetailedData.base_stats.dfs"
-                    :sp-atk="pokemonDetailedData.base_stats.sp_atk"
-                    :sp-dfs="pokemonDetailedData.base_stats.sp_dfs"
-                    :spd="pokemonDetailedData.base_stats.spd"
-                /> -->
+            <hr/>
 
-                <!-- Evolution(s) 
-
-                <div class="row"> 
-                    <div 
-                        v-for="pokemon in allDisplayCardData" :key="pokemon.id"
-                    >
-                        <RouterLink :to="{ name: 'detail', params: { id: pokemon.id } }">
-                            <DisplayCard 
-                                :pokemon="pokemon"
-                            />
-                        </RouterLink>
-                    </div>
-                </div>
-                
-                -->
-            </div>
+            <!-- A row to display stats chart (health, attack, defense, special attack -->
+            <!--                               special defense, speed)                 -->
             <div class="row justify-content-center py-4">
+                <h4 class="text-muted">Base stats</h4>
                 <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
                     <StatsChart
                         :hp="pokemonDetailedData.base_stats.hp"
@@ -131,44 +81,85 @@
                     />
                 </div>
             </div>
-            <div class="row justify-content-center py-4 m-4">
+
+            <hr/>
+
+            <!-- A row to display locations (contains locaiton names and games) -->
+            <div class="row justify-content-center py-4">
                 <h4 class="text-muted">Locations</h4>
                 <Locations
                     :items="pokemonDetailedData.location_info"
+                    :color="pokemonDetailedData.color"
                 />
             </div>
         </section>
 
-        
-
-        <ButtonToTop />
-        
-        <CustomFooter/>
-        
+        <!-- Other necessary components -->
+        <ButtonToTop /> <!-- Component contains button that direct user to top -->
+        <CustomFooter/> <!-- Component contains standardized footer -->
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, watch } from "vue";
-import { useRoute } from "vue-router";
-import Chart from "chart.js/auto";
-import ButtonToTop from "@/components/ButtonToTop.vue";
-import DisplayCard from "@/components/DisplayCard.vue";
-import StatsChart from "@/components/StatsChart.vue";
-import Locations from "@/components/detailview/Locations.vue";
-import BasicInfo from "@/components/detailview/BasicInfo.vue"
-import CustomFooter from "@/components/CustomFooter.vue";
-import { capitalize } from "@/utils/global";
 
+// Import all necessary modules
+import { ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { capitalize } from "@/utils/global"; // My custom module, for text capitalization
+// Import Components for template in DetailView.vue
+import DetailViewHeader from "@/components/detailview/DetailViewHeader.vue";
+import LoadingView from "./LoadingView.vue"; // Loading screen view
+import CustomFooter from "@/components/CustomFooter.vue"; // Standardized footer
+import ButtonToTop from "@/components/ButtonToTop.vue"; // Enables button to top
+// Import components for DetailView.vue
+import Profile from "@/components/detailview/Profile.vue"; // Display profile (sprite, flavor text, types)
+import Abilities from "@/components/detailview/Abilities.vue"; // Display abilites
+import BasicInfo from "@/components/detailview/BasicInfo.vue" // General information (weight, height etc.)
+import StatsChart from "@/components/detailview/StatsChart.vue"; // Base stats chart
+import Locations from "@/components/detailview/Locations.vue"; // Location table
+
+// props contain id, for fetching data, receive this when click on pokemon card in MainView.vue
 const props = defineProps(["id"]);
+
+// All the necessary data used in Pokemon details
+// Some data can be obtained in different url for example:
+//   1) fetchPokemonData = id, name, sprite, etc.
+//   2) fetchSpeciesData = flavor_text, growth_rate, etc.
+//   3) fetchLocationData = location_info
+// Refer to comments above each functions for more detail
+
+// Explanation for each data:
+//   1) id             = index number, example: 1 for Bulbasaur, 25 for Pikachu etc.
+//   2) name           = Pokemon name, example: Charizard, Voltorb etc.
+//   3) sprite         = Front sprite of a Pokemon
+//   4) types          = Pokemon types, eg: Fire, Water, Flying etc.
+//   5) color          = Pokemon color that will be used as overall theme in DetailView.vue
+//   6) abilities      = Their passive ability, example: Shed Skin for Ekans
+//   7) flavor_text    = Simple pokemon entry
+//   8) base_exp       = Base experience
+//   9) height         = Height in meter
+//  10) weight         = Weight in kilograms
+//  11) base_stats     = Pokemon base stats
+//       a) hp            |-> Base health
+//       b) atk           |-> Base attack
+//       c) dfs           |-> Base defense
+//       d) sp_atk        |-> Base special attack
+//       e) sp_dfs        |-> Base special defense
+//       f) spd           |-> Base speed
+//  12) base_happiness = Base happiness
+//  13) capture_rate   = Capture rate
+//  14) growth_rate    = Growth rate
+//  15) evolutions     = Evolutions (Currently not in used in this project due to time limitation)
+//  16) locations_url  = Url for locations
+//  17) location_info  = Location to find the Pokemon in-game, contains location name and games
 
 const pokemonDetailedData = ref({
     id: "0",
     name: "Name",
     sprite: "Sprite",
-    types: {},
+    types: "Type",
     color: "black",
-    abilities: {},
+    abilities: "Ability",
     flavor_text: "Flavor Text",
     base_exp: 0,
     height: 0,
@@ -183,37 +174,37 @@ const pokemonDetailedData = ref({
     },
     base_happiness: 0,
     capture_rate: 0,
-    growth_rate: "",
-    habitat: "",
-    evolutions: "",
+    growth_rate: "n/a",
+    evolutions: "n/a",
     locations_url: "",
     location_info: {}
 })
 
-const allLocationsData = ref({
+const loading = ref(true); // For loading check, set to 'false' when done fetching, 
+                           // During 'true', loading screen is displayed instead
 
-})
-
-const allDisplayCardData = ref([]);
-const displayCardData = ref({
-    id: "0",
-    name: "Name",
-    sprite: "Sprite",
-    types: {},
-})
-
-// onMounted(() => {
-//     fetchData2();
-// });
-
-const loading = ref(true);
-
-const fetchData = async() => {
+// Fetch all data required for DetailView.vue
+async function fetchAllData () {
     try {
-        // Fetching data from pokemon
+        loading.value = true; // Reassign value just to be safe
 
-        loading.value = true;
+        // fetch id, name, sprite, types, abilities, base_exp, height, weight, base_stats, locations_url
+        await fetchPokemonData();
+        // fetch color, flavor_text, base_happiness, capture_rate, evolutions
+        await fetchSpeciesData();
+        // fetch location
+        await fetchLocationData();
 
+        loading.value = false; // Reassign loading value to false to display the MainView.vue contents
+    } catch (error) {
+        console.error("Error during fetch all data: " + error);
+    }
+}
+
+// To fetch id, name, sprite, types, abilities, base_exp, height, weight, base_stats, locations_url
+async function fetchPokemonData() {
+    try {
+        // fetch pokemon data using the props.id as reference
         const pokemonResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${props.id}`);
         const pokemonData = await pokemonResponse.json();
         
@@ -236,12 +227,18 @@ const fetchData = async() => {
             },
             locations_url: pokemonData.location_area_encounters
         };
+    } catch (error) {
+        console.error("Error during fetch pokemon data: " + error);
+    }
+}
 
-        // Fetching data from pokemon species
-
+// To fetch color, flavor_text, base_happiness, capture_rate, evolutions
+async function fetchSpeciesData() {
+    try {
+        // fetch pokemon species data using the props.id as reference
         const speciesResponse = await fetch(`https://pokeapi.co/api/v2/pokemon-species/${props.id}`);
         const speciesData = await speciesResponse.json();
-        
+
         pokemonDetailedData.value = {
             ...pokemonDetailedData.value,
             color: speciesData.color.name,
@@ -249,17 +246,23 @@ const fetchData = async() => {
             base_happiness: speciesData.base_happiness,
             capture_rate: speciesData.capture_rate,
             growth_rate: speciesData.growth_rate.name,
-            habitat: speciesData.habitat.name,
             evolutions: speciesData.evolution_chain.url
         };
+    } catch (error) {
+        console.error("Error during fetch pokemon species data: " + error);
+    }
+}
 
-        // Fetching data from locations
-
+// To fetch location
+async function fetchLocationData() {
+    try {
+        // Fetch pokemon location data using the props.id as reference
         const locationResponse = await fetch(pokemonDetailedData.value.locations_url);
         const locationData = await locationResponse.json();
 
+        // LocationData contains multiple data, only need location name and its game here
+        // Push each data into locationInfoArray first then into pokemonDetailedData
         let locationInfoArray = [];
-
         locationData.forEach((locations) => {
             let gamesNames = [];
             
@@ -273,69 +276,24 @@ const fetchData = async() => {
             })
         });
 
+        // Push the data inside location_info after done fetching without error
         pokemonDetailedData.value = {
             ...pokemonDetailedData.value,
             location_info: locationInfoArray
         }
-
-        console.log(pokemonDetailedData.value.location_info);
-
-        // Fetching data from evolution chain
-
-        const evoChainResponse = await fetch(pokemonDetailedData.value.evolutions);
-        const evoChainData = await evoChainResponse.json();
-
-        pokemonDetailedData.value = {
-            ...pokemonDetailedData.value,
-            evolutions: evoChainData.chain.evolves_to.map(
-                evolution => evolution.species.name
-            ),
-        };
-
-        pokemonDetailedData.value.evolutions.forEach(async evolution => {
-            const evoDisplayCardResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${evolution}`);
-            const evoDisplayCardData = await evoDisplayCardResponse.json();
-
-            displayCardData.value = {
-                id: evoDisplayCardData.id,
-                name: evoDisplayCardData.name,
-                sprite: evoDisplayCardData.sprites.front_default,
-                types: evoDisplayCardData.types
-            }
-            allDisplayCardData.value.push(displayCardData.value);
-
-            // console.log(displayCardData.value);
-        });
-
-        loading.value = false;
-
     } catch (error) {
-        console.error("Error during fetch data: " + error);
+        console.error("Error during fetch pokemon location data: " + error);
     }
 }
 
+// To ensure that the display refresh every time a data was changed
 const route = useRoute();
-
 watch(() => 
     route.params.id,
     (newId) => {
-        fetchData();
+        fetchAllData();
     },
     { immediate: true }
 )
 
 </script>
-
-<style>
-    .custom-chart {
-        width: 100%;
-        height: 300px;
-    }
-
-    @media (min-width: 992px) {
-        .custom-chart {
-            width: 60%;
-            height: auto;
-        }
-    }
-</style>
