@@ -17,7 +17,6 @@ const props = defineProps({
     sp_atk: Number,
     sp_dfs: Number,
     spd: Number,
-    color: String
 });
 
 // Use ref for chart canvas

@@ -1,6 +1,16 @@
 <template>
-    <div>
-        <DetailViewHeader :id="props.id"/>
+    <!-- Error screen -->
+    <!-- Only display this screen when there is an error somewhere -->
+    <div v-if="errorFlag">
+        <div 
+            class="d-flex justify-content-center align-items-center"
+            style="height: 100vh;"
+        >
+            <ErrorView/>
+        </div>
+    </div>
+    <div v-else>
+        <DetailViewHeader :id="pokemonStore.id"/>
         <!-- Loading screen -->
         <!-- By default, v-if is true, it will only change to false when data fetching is done -->
         <!-- style="height: 100vh;" used to ensure LoadingView.vue covers the whole screen -->
@@ -22,7 +32,7 @@
             <!-- A row to display name -->
             <div class="row py-3 px-lg-5">
                 <div class="col">
-                    <h1 class="text-center">{{ capitalize(pokemonDetailedData.name) }}</h1>
+                    <h1 class="text-center">{{ capitalize(pokemonStore.name) }}</h1>
                 </div>
             </div>
             <!-- A row to display profile, abilities and basic info  -->
@@ -30,10 +40,10 @@
                 <!-- The left column to display profile (sprite, flavor text, and types) -->
                 <div class="col-md-6 col-lg-6 my-3">
                     <Profile
-                        :color="pokemonDetailedData.color"
-                        :sprite="pokemonDetailedData.sprite"
-                        :flavor_text="pokemonDetailedData.flavor_text"
-                        :types="pokemonDetailedData.types"
+                        :color="pokemonStore.color"
+                        :sprite="pokemonStore.sprite"
+                        :flavor_text="pokemonStore.flavor_text"
+                        :types="pokemonStore.types"
                     />
                 </div>
                 <!-- The right column to display abilities and basic info -->
@@ -42,7 +52,7 @@
                     <div class="row py-4">
                         <h4 class="text-muted">Abilities</h4>
                         <Abilities 
-                            :abilities="pokemonDetailedData.abilities"
+                            :abilities="pokemonStore.abilities"
                         />
                     </div>
                     <!-- Display basic information (base exp, height, weight, base happiness -->
@@ -51,12 +61,12 @@
                         <h4 class="text-muted">Basic Information</h4>
                         <BasicInfo
                             :items="[
-                                {header:'Base Experience',data:pokemonDetailedData.base_exp},
-                                {header:'Height (m)',data:pokemonDetailedData.height},
-                                {header:'Weight (kg)',data:(pokemonDetailedData.weight / 10).toFixed(1)},
-                                {header:'Base Happiness',data:pokemonDetailedData.base_happiness},
-                                {header:'Capture Rate',data:pokemonDetailedData.capture_rate},
-                                {header:'Growth Rate',data:capitalize(pokemonDetailedData.growth_rate)}
+                                {header:'Base Experience',data:pokemonStore.base_exp},
+                                {header:'Height (m)',data:pokemonStore.height},
+                                {header:'Weight (kg)',data:(pokemonStore.weight / 10).toFixed(1)},
+                                {header:'Base Happiness',data:pokemonStore.base_happiness},
+                                {header:'Capture Rate',data:pokemonStore.capture_rate},
+                                {header:'Growth Rate',data:capitalize(pokemonStore.growth_rate)}
                             ]"
                         />
                     </div>
@@ -71,13 +81,13 @@
                 <h4 class="text-muted">Base stats</h4>
                 <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
                     <StatsChart
-                        :hp="pokemonDetailedData.base_stats.hp"
-                        :atk="pokemonDetailedData.base_stats.atk"
-                        :dfs="pokemonDetailedData.base_stats.dfs"
-                        :sp_atk="pokemonDetailedData.base_stats.sp_atk"
-                        :sp_dfs="pokemonDetailedData.base_stats.sp_dfs"
-                        :spd="pokemonDetailedData.base_stats.spd"
-                        :color="pokemonDetailedData.color"
+                        :hp="pokemonStore.base_stats.hp"
+                        :atk="pokemonStore.base_stats.atk"
+                        :dfs="pokemonStore.base_stats.dfs"
+                        :sp_atk="pokemonStore.base_stats.sp_atk"
+                        :sp_dfs="pokemonStore.base_stats.sp_dfs"
+                        :spd="pokemonStore.base_stats.spd"
+                        :color="pokemonStore.color"
                     />
                 </div>
             </div>
@@ -88,8 +98,26 @@
             <div class="row justify-content-center py-4">
                 <h4 class="text-muted">Locations</h4>
                 <Locations
-                    :items="pokemonDetailedData.location_info"
-                    :color="pokemonDetailedData.color"
+                    :items="pokemonStore.location_info"
+                    :color="pokemonStore.color"
+                />
+            </div>
+
+            <hr/>
+
+            <!-- A row to display locations (contains locaiton names and games) -->
+            <div class="row justify-content-center py-4">
+                <h4 class="text-muted">Edit Store</h4>
+                <div class="p-4 text-center">
+                    <div @click="toggleEnableEdit" class="custom-button-hover">
+                        <i v-if="!enableEdit">Edit </i>
+                        <i v-else>Done </i>
+                        <i class="fa fa-edit"></i>
+                    </div>
+                </div>
+                <EditStore
+                        v-if="enableEdit"
+                        :pokemon="pokemonStore"
                 />
             </div>
         </section>
@@ -105,10 +133,12 @@
 // Import all necessary modules
 import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
+import { usePokemonStore } from "@/stores/pokemonStore"; // Store for pinia
 import { capitalize } from "@/utils/global"; // My custom module, for text capitalization
 // Import Components for template in DetailView.vue
 import DetailViewHeader from "@/components/detailview/DetailViewHeader.vue";
 import LoadingView from "./LoadingView.vue"; // Loading screen view
+import ErrorView from "./ErrorView.vue"; // Display error component when an error happens
 import CustomFooter from "@/components/CustomFooter.vue"; // Standardized footer
 import ButtonToTop from "@/components/ButtonToTop.vue"; // Enables button to top
 // Import components for DetailView.vue
@@ -117,6 +147,7 @@ import Abilities from "@/components/detailview/Abilities.vue"; // Display abilit
 import BasicInfo from "@/components/detailview/BasicInfo.vue" // General information (weight, height etc.)
 import StatsChart from "@/components/detailview/StatsChart.vue"; // Base stats chart
 import Locations from "@/components/detailview/Locations.vue"; // Location table
+import EditStore from "@/components/detailview/EditStore.vue";
 
 // props contain id, for fetching data, receive this when click on pokemon card in MainView.vue
 const props = defineProps(["id"]);
@@ -154,7 +185,7 @@ const props = defineProps(["id"]);
 //  17) location_info  = Location to find the Pokemon in-game, contains location name and games
 
 const pokemonDetailedData = ref({
-    id: "0",
+    id: 0,
     name: "Name",
     sprite: "Sprite",
     types: "Type",
@@ -180,8 +211,12 @@ const pokemonDetailedData = ref({
     location_info: {}
 })
 
+// Pinia Implementation - use the pokemonStore to keep all important information
+const pokemonStore = usePokemonStore();
+
 const loading = ref(true); // For loading check, set to 'false' when done fetching, 
                            // During 'true', loading screen is displayed instead
+const errorFlag = ref(false); // Trigger this when an error occures
 
 // Fetch all data required for DetailView.vue
 async function fetchAllData () {
@@ -195,8 +230,12 @@ async function fetchAllData () {
         // fetch location
         await fetchLocationData();
 
+        // After all the fetching is done, insert all data into pinia store
+        pokemonStore.setPokemonData(pokemonDetailedData.value);
+
         loading.value = false; // Reassign loading value to false to display the MainView.vue contents
     } catch (error) {
+        errorFlag.value = true;
         console.error("Error during fetch all data: " + error);
     }
 }
@@ -228,6 +267,7 @@ async function fetchPokemonData() {
             locations_url: pokemonData.location_area_encounters
         };
     } catch (error) {
+        errorFlag.value = true;
         console.error("Error during fetch pokemon data: " + error);
     }
 }
@@ -249,6 +289,7 @@ async function fetchSpeciesData() {
             evolutions: speciesData.evolution_chain.url
         };
     } catch (error) {
+        errorFlag.value = true;
         console.error("Error during fetch pokemon species data: " + error);
     }
 }
@@ -282,8 +323,15 @@ async function fetchLocationData() {
             location_info: locationInfoArray
         }
     } catch (error) {
+        errorFlag.value = true;
         console.error("Error during fetch pokemon location data: " + error);
     }
+}
+
+// To toggle between edit and non-edit pinia state
+const enableEdit = ref(false);
+function toggleEnableEdit() {
+    enableEdit.value = !enableEdit.value;
 }
 
 // To ensure that the display refresh every time a data was changed
