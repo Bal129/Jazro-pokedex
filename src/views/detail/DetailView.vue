@@ -137,8 +137,8 @@ import { usePokemonStore } from "@/stores/pokemonStore"; // Store for pinia
 import { capitalize } from "@/utils/global"; // My custom module, for text capitalization
 // Import Components for template in DetailView.vue
 import DetailViewHeader from "@/components/detailview/DetailViewHeader.vue";
-import LoadingView from "./LoadingView.vue"; // Loading screen view
-import ErrorView from "./ErrorView.vue"; // Display error component when an error happens
+import LoadingView from "../loading/LoadingView.vue"; // Loading screen view
+import ErrorView from "../error/ErrorView.vue"; // Display error component when an error happens
 import CustomFooter from "@/components/CustomFooter.vue"; // Standardized footer
 import ButtonToTop from "@/components/ButtonToTop.vue"; // Enables button to top
 // Import components for DetailView.vue

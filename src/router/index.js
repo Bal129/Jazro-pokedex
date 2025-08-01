@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainView from "../views/MainView.vue";
-import DetailView from '@/views/DetailView.vue';
-import NotFound from '@/views/NotFound.vue';
+import MainView from "@/views/main/MainView.vue";
+import DetailView from '@/views/detail/DetailView.vue';
+import NotFound from '@/views/notfound/NotFound.vue';
 
 const router = createRouter({
 	history: createWebHistory(import.meta.env.BASE_URL),
