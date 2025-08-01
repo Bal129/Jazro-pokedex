@@ -1,19 +1,20 @@
 <template>
-    <!-- A simple error screen -->
-    <!-- Contains three parts: top Pokeball, middle content, bottom Pokeball -->
-    <div class="row d-flex justify-content-center align-items-center">
-        <!-- Top pokeball using custom-loading-top-pokeball class in custom.css -->
-        <span 
-            class="custom-loading-top-pokeball" 
-            style="transform: translateX(100px) translateY(-70px) rotate(45deg);"
-        >
-        </span>
-        <!-- Middle content contains a text 'Error' and an icon -->
-        <div class="d-flex justify-content-center align-items-center">
-            <h1 class="p-2 text-center">Error, refer to console</h1>
-            <i class="fa fa-exclamation-triangle fa-3x fa-fw"></i>
-        </div>
-        <!-- Bottom pokeball using custom-loading-bottom-pokeball class in custom.css -->
-        <span class="custom-loading-bottom-pokeball" ></span>
-    </div>
+  <!-- A simple error screen -->
+  <div class="d-flex flex-column justify-content-between align-items-center">
+    <!-- Top pokeball using custom-loading-top-pokeball class -->
+    <span class="c-top-pokeball-loading c-top-pokeball-error"></span>
+
+    <!-- Middle content contains a text 'Error' and an icon -->
+    <h1 class="display-1 fw-bold text-center p-2">
+      Error
+      <span class="fa fa-exclamation-triangle"></span>
+    </h1>
+
+    <h6 class="text-center pb-2">
+      Refer to console (Press F12)
+    </h6>
+
+    <!-- Bottom pokeball using custom-loading-bottom-pokeball class in -->
+    <span class="c-bottom-pokeball-loading"></span>
+  </div>
 </template>

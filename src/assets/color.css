@@ -1,0 +1,290 @@
+/* Themes */
+:root {
+  --color-main: rgb(108, 0, 180);
+  --color-secondary: white;
+  --color-accent: rgb(203, 113, 255);
+}
+
+/* Styles for pokemon types */
+
+.type-normal {
+  background-color: rgb(163, 163, 163);
+  color: black;
+}
+
+.type-fire {
+  background-color: rgb(255, 25, 25);
+  color: white;
+}
+
+.type-fighting {
+  background-color: rgb(255, 102, 0);
+  color: black;
+}
+
+.type-water {
+  background-color: rgb(37, 113, 253);
+  color: white;
+}
+
+.type-flying {
+  background-color: rgb(123, 191, 255);
+  color: black;
+}
+
+.type-grass {
+  background-color: rgb(2, 155, 48);
+  color: white;
+}
+
+.type-poison {
+  background-color: rgb(191, 63, 250);
+  color: white;
+}
+
+.type-electric {
+  background-color: rgb(255, 225, 54);
+  color: black;
+}
+
+.type-ground {
+  background-color: rgb(194, 153, 107);
+  color: black;
+}
+
+.type-psychic {
+  background-color: rgb(255, 68, 171);
+  color: black;
+}
+
+.type-rock {
+  background-color: rgb(182, 144, 109);
+  color: black;
+}
+
+.type-ice {
+  background-color: rgb(81, 249, 255);
+  color: black;
+}
+
+.type-bug {
+  background-color: rgb(47, 255, 110);
+  color: black;
+}
+
+.type-dragon {
+  background-color: rgb(53, 101, 235);
+  color: black;
+}
+
+.type-ghost {
+  background-color: rgb(72, 42, 80);
+  color: white;
+}
+
+.type-dark {
+  background-color: rgb(122, 83, 82);
+  color: black;
+}
+
+.type-steel {
+  background-color: rgb(110, 136, 143);
+  color: black;
+}
+
+.type-fairy {
+  background-color: rgb(255, 88, 247);
+  color: black;
+}
+
+.type-stellar {
+  background-color: rgb(30, 236, 168);
+  color: black;
+}
+
+/* Styles for games title in locations */
+
+.game-red {
+  background-color: red;
+  color: white;
+}
+
+.game-blue {
+  background-color: rgb(0, 17, 255);
+  color: white;
+}
+
+.game-yellow {
+  background-color: rgb(251, 255, 0);
+  color: black;
+}
+
+.game-gold {
+  background-color: rgb(153, 132, 40);
+  color: black;
+}
+
+.game-silver {
+  background-color: rgb(148, 153, 158);
+  color: white;
+}
+
+.game-crystal {
+  background-color: rgb(130, 157, 197);
+  color: white;
+}
+
+.game-ruby {
+  background-color: rgb(116, 16, 16);
+  color: white;
+}
+
+.game-sapphire {
+  background-color: rgb(16, 45, 139);
+  color: white;
+}
+
+.game-emerald {
+  background-color: rgb(13, 117, 39);
+  color: white;
+}
+
+.game-firered {
+  background-color: red;
+  color: white;
+}
+
+.game-leafgreen {
+  background-color: rgb(8, 165, 15);
+  color: black;
+}
+
+.game-diamond {
+  background-color: rgb(10, 96, 207);
+  color: white;
+}
+
+.game-pearl {
+  background-color: rgb(230, 42, 98);
+  color: white;
+}
+
+.game-platinum {
+  background-color: rgb(124, 124, 124);
+  color: black;
+}
+
+.game-heartgold {
+  background-color: rgb(153, 132, 40);
+  color: white;
+}
+
+.game-soulsilver {
+  background-color: rgb(148, 153, 158);
+  color: black;
+}
+
+.game-black {
+  background-color: rgb(19, 19, 19);
+  color: white;
+}
+
+.game-white {
+  background-color: rgb(226, 226, 226);
+  color: black;
+}
+
+.game-black-2 {
+  background-color: rgb(19, 19, 19);
+  color: white;
+}
+
+.game-white-2 {
+  background-color: rgb(226, 226, 226);
+  color: black;
+}
+
+.game-x {
+  background-color: rgb(27, 120, 173);
+  color: white;
+}
+
+.game-y {
+  background-color: rgb(173, 32, 27);
+  color: white;
+}
+
+.game-omega-ruby {
+  background-color: rgb(116, 16, 16);
+  color: white;
+}
+
+.game-alpha-sapphire {
+  background-color: rgb(16, 45, 139);
+  color: white;
+}
+
+.game-sun {
+  background-color: rgb(235, 154, 32);
+  color: black;
+}
+
+.game-moon {
+  background-color: rgb(105, 34, 238);
+  color: white;
+}
+
+.game-ultra-sun {
+  background-color: rgb(235, 154, 32);
+  color: white;
+}
+
+.game-ultra-moon {
+  background-color: rgb(105, 34, 238);
+  color: white;
+}
+
+.game-lets-go-pikachu {
+  background-color: rgb(204, 190, 0);
+  color: black;
+}
+
+.game-lets-go-eevee {
+  background-color: rgb(167, 98, 52);
+  color: white;
+}
+
+.game-sword {
+  background-color: rgb(199, 15, 46);
+  color: white;
+}
+
+.game-shield {
+  background-color: rgb(64, 15, 199);
+  color: white;
+}
+
+.game-brilliant-diamond {
+  background-color: rgb(10, 96, 207);
+  color: white;
+}
+
+.game-shining-pearl {
+  background-color: rgb(230, 42, 98);
+  color: white;
+}
+
+.game-legends-arceus {
+  background-color: rgb(190, 194, 216);
+  color: white;
+}
+
+.game-scarlet {
+  background-color: rgb(216, 4, 68);
+  color: white;
+}
+
+.game-violet {
+  background-color: rgb(114, 4, 216);
+  color: white;
+}

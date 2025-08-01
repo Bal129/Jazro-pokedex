@@ -1,13 +1,12 @@
 <template>
-  <div v-if="errorFlag">
+  <div 
+    v-if="errorFlag"
+    class="d-flex justify-content-center align-items-center"
+    style="height: 100vh;"
+  >
     <!-- Error screen -->
     <!-- Only display this screen when there is an error somewhere -->
-    <div 
-      class="d-flex justify-content-center align-items-center"
-      style="height: 100vh;"
-    >
-      <ErrorView/>
-    </div>
+    <ErrorView />
   </div>
   <div v-else>
     <!-- Loading screen -->    
@@ -18,17 +17,17 @@
       class="d-flex justify-content-center align-items-center"
       style="height: 100vh;"
     >
-      <LoadingView/>
+      <LoadingView />
     </div>
 
     <!-- MainView.vue main contents -->
     <!-- This div only visible when loading is false (fetch is done) -->
-    <div v-else class="custom-fade-in">
+    <div v-else class="c-anim-fade-in">
       <!-- Header that contains 'Pokedex' text and search functionality -->
       <Header @update-target="handleTargetUpdate" />
 
       <!-- A section that holds a 'Welcome' text and all the Pokemon display cards -->
-      <section class="container bg-light">
+      <section class="container bg-light" style="min-height: 100vh;">
         <Welcome :displayNum="numOfPokemon" />
 
         <!-- Displays the pokemon basic data cards that contains in search -->
@@ -61,7 +60,7 @@
 
 <script setup>
 // Import all necessary modules 
-import { ref, onMounted, computed, onUnmounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 
 // Import Views
 import LoadingView from "../loading/LoadingView.vue"; // View component that displays during loading
@@ -81,6 +80,7 @@ const numOfPokemon = 100; // Set the number of pokemon to display in the MainVie
 const allPokemonData = ref([]); // Store fetched pokemon data here
 const loading = ref(true); // Show loading screen when data is still fetching
 const errorFlag = ref(false); // Trigger this when an error occures
+const errorMessage = ref("");
 
 // Function to fetch all pokemon data then call fetchEachData()
 async function fetchAllData() {
@@ -99,9 +99,10 @@ async function fetchAllData() {
     allPokemonData.value.sort((a,b) => a.id - b.id);
 
     // Reassign loading value to false to display the MainView.vue contents
-    loading.value = false;    
+    loading.value = false;
   } catch (error) {
     errorFlag.value = true;
+    errorMessage.value = error.errorMessage;
     console.error("Error during fetch all data: " + error);
   }
 }

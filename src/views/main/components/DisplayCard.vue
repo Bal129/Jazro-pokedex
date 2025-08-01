@@ -1,7 +1,7 @@
 <template>
   <!-- Display the simplified Pokemon data using bootstrap card class -->
   <!-- Simplified data ('pokemon' props) contains index, name, sprite and types -->
-  <div class="card m-2 custom-dcard custom-slide-up" v-if="props.pokemon" >
+  <div class="card border-0 font-monospace c-dcard-img c-anim-slide-up m-2" v-if="props.pokemon" >
     <!-- Display Pokemon index (id) on top left -->
     <!-- cus-index class ensure that the position is always on top left -->
     <h3 class="cus-index m-2">
@@ -27,7 +27,7 @@
       <div>
         <ul class="list-group list-group-horizontal">
           <li 
-            class="list-group-item flex-fill text-center"
+            class="list-group-item fw-bold flex-fill text-center"
             v-for="row in props.pokemon.types"
             :class="'type-'.concat(row.type.name)"
           >

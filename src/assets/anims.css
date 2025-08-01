@@ -1,0 +1,99 @@
+/* classes */
+
+.c-anim-floating {
+  animation: float 1s ease-in-out infinite;
+}
+
+.c-anim-fade-in {
+  animation: fade-in 1s ease-out;
+}
+
+.c-anim-slide-up {
+  animation: slide-up 1s ease-out;
+}
+
+.c-anim-slide-down {
+  animation: slide-down 1s ease-out;
+}
+
+.c-anim-navbar-top {
+  animation: top-navbar-in 1s ease-out;
+}
+
+.c-anim-navbar-bottom {
+  animation: bottom-navbar-in 1s ease-out;
+}
+
+.c-anim-to-top {
+  animation: button-to-top 2s ease-in-out infinite;
+}
+
+.c-anim-to-top:hover {
+  scale: 1.1;
+}
+
+/* keyframes */
+  
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+    opacity: 0.7;
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes top-navbar-in {
+  0% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes bottom-navbar-in {
+  0% {
+    transform: translateY(20px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes button-to-top {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}

@@ -1,7 +1,9 @@
 <template>
   <!-- Extra spacing for visual appeal -->
   <div class="row py-5 mx-2">
-    <i class="p-2 text-center fa fa-check-square fa-2x"></i>
-    <h5 class="text-muted text-center">End of page</h5>
+    <h6 class="display-6 text-center text-muted">
+      <i class="fa fa-check-square p-2 text-center text-muted"></i>
+      End of page
+    </h6>
   </div>
 </template>
