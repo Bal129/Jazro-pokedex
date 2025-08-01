@@ -26,14 +26,16 @@
     <!-- Main contents for DetailView.vue -->
     <!-- This div only visible when loading is false (fetch is done) -->
     
-    <section v-else class="container bg-light font-monospace c-anim-fade-in p-5">
+    <section v-else class="container font-monospace c-anim-fade-in p-5">
       <!-- Extra spacing for visual appeal -->
       <div class="row py-4"></div>
 
       <!-- A row to display name -->
       <div class="row py-3 px-lg-5">
         <div class="col">
-          <h1 class="text-center">{{ capitalize(pokemonStore.name) }}</h1>
+          <h3 class="display-3 text-center fw-bold">
+            {{ capitalize(pokemonStore.name) }}
+          </h3>
         </div>
       </div>
 

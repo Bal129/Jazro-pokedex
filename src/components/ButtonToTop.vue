@@ -7,8 +7,10 @@
         class="c-btn-to-top c-anim-to-top"
         @click="scrollToTop"
         style="cursor: pointer;"
+        title="Go to: Top of the page"
       >
-        <i class="fas fa-arrow-circle-up"></i>
+        <span class="small text-light">Top</span>
+        <i class="fas fa-arrow-circle-up ps-2 text-light"></i>
       </div>
     </div>
   </section>

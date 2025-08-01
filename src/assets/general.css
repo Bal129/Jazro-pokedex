@@ -42,8 +42,8 @@
   position: relative;
   border: 0.15em solid black;
   border-radius: 100px ;
-  background-color: var(--color-main);
-  width: 3em;
+  background-color: var(--color-to-top-button);
+  width: 5em;
   height: 3em;
   margin-top: -1em;
   margin-bottom: 0.5em;
@@ -53,7 +53,15 @@
 }
 
 .c-btn-to-top:hover {
-  background-color: var(--color-accent);
+  background-color: var(--color-main);
+}
+
+.c-btn-nav {
+  color: var(--color-nav-button-normal);
+}
+
+.c-btn-nav:hover {
+  color: var(--color-nav-button-highlight);
 }
 
 .c-edit-button:hover {

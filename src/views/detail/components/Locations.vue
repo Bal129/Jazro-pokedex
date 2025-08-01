@@ -1,58 +1,57 @@
 <template>
-
-    <!-- Display this when Pokemon DOES contains location information -->
-    <!-- propsAvailable set to 'true' if this Pokemon has location(s) -->
-    <div 
-        v-if="propsAvailable"
-        class="table-responsive py-2 px-lg-5 px-xl-5"
+  <!-- Display this when Pokemon DOES contains location information -->
+  <!-- propsAvailable set to 'true' if this Pokemon has location(s) -->
+  <div 
+    v-if="propsAvailable"
+    class="table-responsive px-lg-5 px-xl-5"
+  >
+    <table 
+      class="table table-light table-hover text-center"
     >
-        <table 
-            class="table table-striped table-bordered table-hover text-center"
+      <thead class="">
+        <!-- Table headers -->
+        <tr>
+          <th class="text-center px-3 py-4" scope="col">Number</th>
+          <th class="text-center px-3 py-4" scope="col">Location</th>
+          <th class="text-center px-3 py-4" scope="col">Games</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr 
+          v-for="(item, index) in props.items" :key="index"
         >
-            <thead class="table-dark">
-                <!-- Table headers -->
-                <tr>
-                    <th class="text-center" scope="col">No</th>
-                    <th class="text-center" scope="col">Location</th>
-                    <th class="text-center" scope="col">Games</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr 
-                    v-for="(item, index) in props.items" :key="index"
-                >
-                    <!-- Table contents for each row -->
-                    <!-- Display the location first then its games -->
-                    <td class="text-center" style="width: 10%">{{ index + 1 }}</td>
-                    <td style="width: 40%">
-                        {{ capitalize(item.locationName) }}
-                    </td>
-                    <td style="width: 50%">
-                        <div class="p-2 d-flex align-items-center">
-                            <!-- :class="'game-'.concat(game)" uses custom color -->
-                            <!-- for every game, refer to custom.css -->
-                            <span
-                                v-for="game in item.gamesName"
-                                class="border rounded p-2" 
-                                :class="'game-'.concat(game)"
-                            >
-                                {{ capitalize(game) }}
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+          <!-- Table contents for each row -->
+          <!-- Display the location first then its games -->
+          <td class="text-center">{{ index + 1 }}</td>
+          <td>
+            {{ capitalize(item.locationName) }}
+          </td>
+          <td>
+            <div class="p-2 d-flex align-items-center">
+              <!-- :class="'game-'.concat(game)" uses custom color -->
+              <!-- for every game, refer to custom.css -->
+              <span
+                v-for="game in item.gamesName"
+                class="border rounded-4 py-2 px-3 mx-1" 
+                :class="'game-'.concat(game)"
+              >
+                {{ capitalize(game) }}
+              </span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- Display this when Pokemon DOES NOT contains location information -->
-    <div v-else class="w-50">
-        <h6 
-            class="border rounded text-center text-muted p-3 m-2"
-        >
-            No data
-        </h6>
-    </div>
+  <!-- Display this when Pokemon DOES NOT contains location information -->
+  <div v-else class="w-50">
+    <h6 
+      class="border rounded text-center text-muted p-3 m-2"
+    >
+      No data
+    </h6>
+  </div>
 </template>
 
 <script setup>
@@ -66,9 +65,9 @@ const propsAvailable = ref(false);
 
 // Check to make sure items contains at least one data, if not, show 'No data'
 onMounted(() => {
-    if (props.items.length > 1) {
-        propsAvailable.value = true;
-    }
+  if (props.items.length > 1) {
+    propsAvailable.value = true;
+  }
 })
 
 </script>

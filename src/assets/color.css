@@ -1,8 +1,12 @@
 /* Themes */
 :root {
-  --color-main: rgb(108, 0, 180);
-  --color-secondary: white;
-  --color-accent: rgb(203, 113, 255);
+  --color-main: rgb(170, 11, 11);
+  --color-secondary: rgb(253, 246, 246);
+  --color-text-light: rgb(223, 223, 223);
+  --color-accent: rgb(255, 156, 99);
+  --color-to-top-button: rgb(31, 31, 31);
+  --color-nav-button-normal: rgb(238, 238, 238);
+  --color-nav-button-highlight: rgb(255, 178, 178);
 }
 
 /* Styles for pokemon types */

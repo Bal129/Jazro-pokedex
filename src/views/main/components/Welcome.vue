@@ -7,7 +7,7 @@
       Welcome, Trainer!
     </h3>
     <h6 class="font-monospace fw-bold text-center text-muted py-3">
-      This is a list of Pokemons from index 1 to {{ displayNum }}. <br/>
+      This is a list of Pokemons from index 1 to {{ displayNum }}.
       Click on one of the Pokemons to view their details or search your 
       favorite Pokemon using the search functionality on top!
     </h6>
