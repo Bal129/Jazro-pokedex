@@ -26,7 +26,7 @@
     <!-- Main contents for DetailView.vue -->
     <!-- This div only visible when loading is false (fetch is done) -->
     
-    <section v-else class="container font-monospace c-anim-fade-in p-5">
+    <section v-else class="container c-bg-color font-monospace c-anim-fade-in p-5">
       <!-- Extra spacing for visual appeal -->
       <div class="row py-4"></div>
 

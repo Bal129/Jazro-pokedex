@@ -27,7 +27,7 @@
       <Header @update-target="handleTargetUpdate" />
 
       <!-- A section that holds a 'Welcome' text and all the Pokemon display cards -->
-      <section class="container" style="min-height: 100vh;">
+      <section class="container c-bg-color" style="min-height: 100vh">
         <Welcome :displayNum="numOfPokemon" />
 
         <!-- Displays the pokemon basic data cards that contains in search -->
