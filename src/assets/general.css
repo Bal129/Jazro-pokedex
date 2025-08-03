@@ -1,13 +1,18 @@
 :root {
-  --background-image: url("./img/bg-1.png");
+  --background-image: url("/img/bg-2.png");
+  --header-image: url("/img/bg-5.png");
+  --pokeball: url("/img/pokeball.png");
+  --greatball: url("/img/greatball.png");
+  --ultraball: url("/img/ultraball.png");
+  --masterball: url("/img/masterball.png");
 }
 
 body {
   background-image: var(--background-image);
 }
 
-.c-bg-color {
-  background-color: rgba(255, 255, 255, 0.8);
+.c-page-header {
+  background-image: var(--header-image);
 }
 
 /* Pokeball images */
@@ -62,6 +67,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  color: var(--color-nav-button-normal);
 }
 
 .c-btn-to-top:hover {
@@ -79,6 +85,36 @@ body {
 .c-edit-button:hover {
   transform: scale(1.3);
   cursor: pointer;
+}
+
+.c-btn-theme {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  border: none;
+  background-color: transparent;
+  width: 50px;
+  height: 50px;
+}
+
+.c-btn-theme:hover {
+  transform: scale(1.1);
+}
+
+.c-btn-pokeball {
+  background-image: var(--pokeball);
+}
+
+.c-btn-greatball {
+  background-image: var(--greatball);
+}
+
+.c-btn-ultraball {
+  background-image: var(--ultraball);
+}
+
+.c-btn-masterball {
+  background-image: var(--masterball);
 }
 
 /* Display cards (dcard) */

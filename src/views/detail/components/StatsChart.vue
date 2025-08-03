@@ -44,8 +44,8 @@ onMounted(() => {
             props.spd,
         ],
         fill: true,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-        borderColor: props.color,
+        backgroundColor: 'rgba(9, 111, 189, 0.5)',
+        borderColor: 'rgba(47, 94, 130, 1)',
       }]
     },
     options: {

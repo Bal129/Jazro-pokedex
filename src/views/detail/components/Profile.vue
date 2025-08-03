@@ -21,7 +21,7 @@
       <!-- 'type-'.concat(row.type.name) refers to custom styling for each types -->
       <!-- Refer to custom.css for more details -->
       <li 
-        class="list-group-item text-center"
+        class="fw-bold list-group-item text-center"
         v-for="row in props.types"
         :class="'type-'.concat(row.type.name)"
       >

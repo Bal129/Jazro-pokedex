@@ -6,14 +6,20 @@
     class="table-responsive px-lg-5 px-xl-5"
   >
     <table 
-      class="table table-light table-hover text-center"
+      class="table table-white table-borderless rounded-4 table-hover text-center overflow-hidden"
     >
       <thead class="">
         <!-- Table headers -->
         <tr>
-          <th class="text-center px-3 py-4" scope="col">Number</th>
-          <th class="text-center px-3 py-4" scope="col">Location</th>
-          <th class="text-center px-3 py-4" scope="col">Games</th>
+          <th class="text-center px-3 py-4" scope="col">
+            Number
+          </th>
+          <th class="text-center px-3 py-4" scope="col">
+            Location
+          </th>
+          <th class="text-center px-3 py-4" scope="col">
+            Games
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +28,10 @@
         >
           <!-- Table contents for each row -->
           <!-- Display the location first then its games -->
-          <td class="text-center">{{ index + 1 }}</td>
-          <td>
+          <td class="text-muted text-center align-middle">
+            {{ index + 1 }}
+          </td>
+          <td class="text-center align-middle">
             {{ capitalize(item.locationName) }}
           </td>
           <td>
@@ -32,7 +40,7 @@
               <!-- for every game, refer to custom.css -->
               <span
                 v-for="game in item.gamesName"
-                class="border rounded-4 py-2 px-3 mx-1" 
+                class="fw-bold border rounded-4 py-2 px-3 mx-1" 
                 :class="'game-'.concat(game)"
               >
                 {{ capitalize(game) }}
@@ -45,11 +53,11 @@
   </div>
 
   <!-- Display this when Pokemon DOES NOT contains location information -->
-  <div v-else class="w-50">
+  <div v-else class="d-flex justify-content-center">
     <h6 
       class="border rounded text-center text-muted p-3 m-2"
     >
-      No data
+      No location data found
     </h6>
   </div>
 </template>

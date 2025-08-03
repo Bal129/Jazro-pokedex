@@ -10,125 +10,157 @@
   </div>
 
   <div v-else>
-    <Header :id="pokemonStore.id" />
-
     <!-- Loading screen -->
     <!-- By default, v-if is true, it will only change to false when data fetching is done -->
     <!-- style="height: 100vh;" used to ensure LoadingView.vue covers the whole screen -->
-    <div 
+    <div
+      v-if="loading"
       class="d-flex justify-content-center align-items-center"
       style="height: 100vh;"
-      v-if="loading"
     >
       <LoadingView/>
     </div>
 
     <!-- Main contents for DetailView.vue -->
     <!-- This div only visible when loading is false (fetch is done) -->
-    
-    <section v-else class="container c-bg-color font-monospace c-anim-fade-in p-5">
-      <!-- Extra spacing for visual appeal -->
-      <div class="row py-4"></div>
+    <div v-else class="container c-anim-fade-in c-bg-color p-0">
+      <Header :id="pokemonStore.id" />
 
-      <!-- A row to display name -->
-      <div class="row py-3 px-lg-5">
-        <div class="col">
-          <h3 class="display-3 text-center fw-bold">
-            {{ capitalize(pokemonStore.name) }}
-          </h3>
-        </div>
-      </div>
+      <section class="c-page-header text-light font-monospace">
+        <!-- Extra spacing for visual appeal -->
+        <div class="py-5"></div>
+        <h3 class="display-3 text-center fw-bold py-5 my-0">
+          {{ capitalize(pokemonStore.name) }}
+        </h3>
+      </section>
 
-      <!-- A row to display profile, abilities and basic info  -->
-      <div class="row px-lg-5 d-flex justify-content-center align-items-center"> <!-- sprite, types, abilities and basic info -->
-        <!-- The left column to display profile (sprite, flavor text, and types) -->
-        <div class="col-md-6 col-lg-6 my-3">
-          <Profile
-            :color="pokemonStore.color"
-            :sprite="pokemonStore.sprite"
-            :flavor_text="pokemonStore.flavor_text"
-            :types="pokemonStore.types"
-          />
-        </div>
-        <!-- The right column to display abilities and basic info -->
-        <div class="col-md-6 col-lg-6 py-4">
-          <!-- Display abilities -->
-          <div class="row py-4">
-            <h4 class="text-muted">Abilities</h4>
-            <Abilities 
-              :abilities="pokemonStore.abilities"
+      <div class="c-line-separator py-1"></div>
+
+      <!-- A section that holds all Pokemon's detailed data -->
+      <section class="font-monospace px-5">
+        <!-- A row to display profile, abilities and basic info  -->
+        <div class="row px-lg-5 d-flex justify-content-center align-items-center"> <!-- sprite, types, abilities and basic info -->
+          <!-- The left column to display profile (sprite, flavor text, and types) -->
+          <div class="col-md-6 col-lg-6 my-3">
+            <Profile
+              :color="pokemonStore.color"
+              :sprite="pokemonStore.sprite"
+              :flavor_text="pokemonStore.flavor_text"
+              :types="pokemonStore.types"
             />
           </div>
-          <!-- Display basic information (base exp, height, weight, base happiness -->
-          <!--                            capture rate, growth rate)               -->
-          <div class="row py-4">
-            <h4 class="text-muted">Basic Information</h4>
-            <BasicInfo
-              :items="[
-                {header:'Base Experience',data:pokemonStore.base_exp},
-                {header:'Height (m)',data:pokemonStore.height},
-                {header:'Weight (kg)',data:(pokemonStore.weight / 10).toFixed(1)},
-                {header:'Base Happiness',data:pokemonStore.base_happiness},
-                {header:'Capture Rate',data:pokemonStore.capture_rate},
-                {header:'Growth Rate',data:capitalize(pokemonStore.growth_rate)}
-              ]"
+          <!-- The right column to display abilities and basic info -->
+          <div class="col-md-6 col-lg-6 py-4">
+            <!-- Display abilities -->
+            <div class="row py-4">
+              <h4 class="c-section-header text-muted">Abilities</h4>
+              <Abilities
+                :abilities="pokemonStore.abilities"
+              />
+            </div>
+            <!-- Display basic information (base exp, height, weight, base happiness -->
+            <!--                            capture rate, growth rate)               -->
+            <div class="row py-4">
+              <h4 class="c-section-header text-muted">Basic Information</h4>
+              <BasicInfo
+                :items="[
+                  {
+                    header:'Base Experience',
+                    data:pokemonStore.base_exp,
+                    icon:'fa-solid fa-brain'
+                  },
+                  {
+                    header:'Height',
+                    data:(pokemonStore.height / 10).toFixed(1) + ' m',
+                    icon:'fa-solid fa-arrows-up-down'
+                  },
+                  {
+                    header:'Weight',
+                    data:(pokemonStore.weight / 10).toFixed(1) + ' kg',
+                    icon:'fa-solid fa-weight-hanging'
+                  },
+                  {
+                    header:'Base Happiness',
+                    data:pokemonStore.base_happiness,
+                    icon:'fa-solid fa-face-smile'
+                  },
+                  {
+                    header:'Capture Rate',
+                    data:pokemonStore.capture_rate,
+                    icon:'fa-solid fa-arrow-up-1-9'
+                  },
+                  {
+                    header:'Growth Rate',
+                    data:capitalize(pokemonStore.growth_rate),
+                    icon:'fa-solid fa-arrows-up-down-left-right'
+                  }
+                ]"
+              />
+            </div>
+          </div>
+        </div>
+        <hr/>
+        <!-- A row to display stats chart (health, attack, defense, special attack -->
+        <!--                               special defense, speed)                 -->
+        <div class="row justify-content-center py-4">
+          <h4 class="c-section-header text-muted">Base stats</h4>
+          <div class="col-12 col-lg-6 col-xl-6 col-xxl-6 my-5">
+            <StatsChart
+              :hp="pokemonStore.base_stats.hp"
+              :atk="pokemonStore.base_stats.atk"
+              :dfs="pokemonStore.base_stats.dfs"
+              :sp_atk="pokemonStore.base_stats.sp_atk"
+              :sp_dfs="pokemonStore.base_stats.sp_dfs"
+              :spd="pokemonStore.base_stats.spd"
+              :color="pokemonStore.color"
             />
           </div>
         </div>
-      </div>
-
-      <hr/>
-
-      <!-- A row to display stats chart (health, attack, defense, special attack -->
-      <!--                               special defense, speed)                 -->
-      <div class="row justify-content-center py-4">
-        <h4 class="text-muted">Base stats</h4>
-        <div class="col-12 col-lg-6 col-xl-6 col-xxl-6">
-          <StatsChart
-            :hp="pokemonStore.base_stats.hp"
-            :atk="pokemonStore.base_stats.atk"
-            :dfs="pokemonStore.base_stats.dfs"
-            :sp_atk="pokemonStore.base_stats.sp_atk"
-            :sp_dfs="pokemonStore.base_stats.sp_dfs"
-            :spd="pokemonStore.base_stats.spd"
-            :color="pokemonStore.color"
-          />
-        </div>
-      </div>
-
-      <hr/>
-
-      <!-- A row to display locations (contains locaiton names and games) -->
-      <div class="row justify-content-center py-4">
-        <h4 class="text-muted">Locations</h4>
-        <Locations
-          :items="pokemonStore.location_info"
-          :color="pokemonStore.color"
-        />
-      </div>
-
-      <hr/>
-
-      <!-- A row to display locations (contains locaiton names and games) -->
-      <div class="row justify-content-center py-4">
-        <h4 class="text-muted">Edit Store</h4>
-        <div class="p-4 text-center">
-          <div @click="toggleEnableEdit" class="c-edit-button">
-            <i v-if="!enableEdit">Edit </i>
-            <i v-else>Done </i>
-            <i class="fa fa-edit"></i>
+        <hr/>
+        
+        <!-- A row to display evolution chains (contains pokemon name, types and sprite) -->
+        <div class="row justify-content-center py-4">
+          <h4 class="c-section-header text-muted">Evolution Chain</h4>
+          <div class="my-5">
+            <Evolution
+              :chains="pokemonStore.evolution_chain"
+            />
           </div>
         </div>
-        <EditStore
-          v-if="enableEdit"
-          :pokemon="pokemonStore"
-        />
-      </div>
-    </section>
+        <hr />
+        
+        <!-- A row to display locations (contains locaiton names and games) -->
+        <div class="row justify-content-center py-4">
+          <h4 class="c-section-header text-muted">Locations</h4>
+          <div class="my-5">
+            <Locations
+              :items="pokemonStore.location_info"
+            />
+          </div>
+        </div>
+        <hr/>
 
-    <!-- Other necessary components -->
-    <ButtonToTop /> <!-- Component contains button that direct user to top -->
-    <CustomFooter/> <!-- Component contains standardized footer -->
+        <!-- A row to display locations (contains locaiton names and games) -->
+        <div class="row justify-content-center py-4">
+          <h4 class="c-section-header text-muted">Edit Store</h4>
+          <div class="p-4 text-center">
+            <div @click="toggleEnableEdit" class="c-edit-button">
+              <i v-if="!enableEdit">Edit </i>
+              <i v-else>Done </i>
+              <i class="fa fa-edit"></i>
+            </div>
+          </div>
+          <EditStore
+            v-if="enableEdit"
+            :pokemon="pokemonStore"
+          />
+        </div>
+      </section>
+
+      <!-- Other necessary components -->
+      <CustomFooter /> <!-- Component contains standardized footer -->
+      <ButtonToTop /> <!-- Component contains button that direct user to top -->
+    </div>
   </div>
 </template>
 
@@ -152,6 +184,7 @@ import Profile from "@/views/detail/components/Profile.vue"; // Display profile 
 import Abilities from "@/views/detail/components/Abilities.vue"; // Display abilites
 import BasicInfo from "@/views/detail/components/BasicInfo.vue" // General information (weight, height etc.)
 import StatsChart from "@/views/detail/components/StatsChart.vue"; // Base stats chart
+import Evolution from "@/views/detail/components/Evolution.vue" // Evolution chain 
 import Locations from "@/views/detail/components/Locations.vue"; // Location table
 import EditStore from "@/views/detail/components/EditStore.vue";
 
@@ -187,7 +220,8 @@ const pokemonDetailedData = ref({
   base_happiness: 0,
   capture_rate: 0,
   growth_rate: "n/a",
-  evolutions: "n/a",
+  evolution_url: "",
+  evolution_chain: {},
   locations_url: "",
   location_info: {}
 })
@@ -208,6 +242,8 @@ async function fetchAllData () {
     await fetchPokemonData();
     // fetch color, flavor_text, base_happiness, capture_rate, evolutions
     await fetchSpeciesData();
+    // fetch evolution chain
+    await fetchEvolutionData();
     // fetch location
     await fetchLocationData();
 
@@ -261,18 +297,87 @@ async function fetchSpeciesData() {
     const speciesData = await speciesResponse.json();
 
     pokemonDetailedData.value = {
-        ...pokemonDetailedData.value,
-        color: speciesData.color.name,
-        flavor_text: speciesData.flavor_text_entries[0].flavor_text,
-        base_happiness: speciesData.base_happiness,
-        capture_rate: speciesData.capture_rate,
-        growth_rate: speciesData.growth_rate.name,
-        evolutions: speciesData.evolution_chain.url
+      ...pokemonDetailedData.value,
+      color: speciesData.color.name,
+      flavor_text: await getFlavorText(speciesData.flavor_text_entries),
+      base_happiness: speciesData.base_happiness,
+      capture_rate: speciesData.capture_rate,
+      growth_rate: speciesData.growth_rate.name,
+      evolution_url: speciesData.evolution_chain.url
     };
   } catch (error) {
     errorFlag.value = true;
     console.error("Error during fetch pokemon species data: " + error);
   }
+}
+
+// A function that ensure to get the first English entry
+// The first flavor text entry mostly are in English but 
+// some Pokemon has a different language as the entry
+async function getFlavorText(flavorTextEntries) {
+  let foundEntry = false;
+  let enEntry = null;
+  flavorTextEntries.forEach(entry => {
+    if (foundEntry) return;
+    if (entry.language.name === "en") {
+      enEntry = entry.flavor_text;
+      foundEntry = true;
+    }
+  });
+
+  // There is an upward arrow in the flavor text, most likely \u000c
+  // \u000c - a non-printable unicode character for pagination
+  // Use /\f in replace to remove it, /g means apply to all
+  return enEntry.replace(/\f/g, " ");
+}
+
+// To fetch the evolution chain
+async function fetchEvolutionData() {
+  try {
+    const evolutionResponse = await fetch(pokemonDetailedData.value.evolution_url);
+    const evolutionData = await evolutionResponse.json();
+
+    let evolutionArray = [];
+    let evolutionPath = [];
+
+    const chains = await getEvolutionChains(evolutionData.chain, evolutionPath, evolutionArray);
+
+    if (evolutionData.chain.evolves_to.length > 0) {      
+      // Push the data inside evolution_chain after done fetching without error
+      pokemonDetailedData.value = {
+        ...pokemonDetailedData.value,
+        evolution_chain: chains
+      }
+    }
+  } catch (error) {
+    errorFlag.value = true;
+    console.error("Error during fetch pokemon evolution data: " + error);
+  }
+}
+
+// To get evolution chains
+// Display: pokemonEvo1 -> pokemonEvo2 -> pokemonEvo3
+async function getEvolutionChains(chain, evolutionPath = [], evolutionArray = []) {
+  const eachEvoResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${chain.species.name}`);
+  const eachEvoData = await eachEvoResponse.json();
+
+  evolutionPath.push({
+    id: eachEvoData.id,
+    name: chain.species.name,
+    types: eachEvoData.types.map(row => row.type.name),
+    sprite: eachEvoData.sprites.front_default
+  });
+
+  if (chain.evolves_to.length === 0) {
+    evolutionArray.push([...evolutionPath]);
+  } else {
+    for (const evo of chain.evolves_to) {
+      await getEvolutionChains(evo, evolutionPath, evolutionArray);
+    }
+  }
+
+  evolutionPath.pop();
+  return evolutionArray;
 }
 
 // To fetch location
@@ -322,9 +427,5 @@ watch(() =>
   () => fetchAllData(),
   { immediate: true }
 )
-
-onMounted(() => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-})
 
 </script>

@@ -1,7 +1,7 @@
 <template>
   <!-- Display abilities list -->
   <!-- Most Pokemon have more than one abilities so need v-for -->
-  <div>
+  <div class="py-3">
     <ul 
       class="list-group d-flex justify-content-center"
     >

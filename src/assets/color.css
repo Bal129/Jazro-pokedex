@@ -1,12 +1,52 @@
 /* Themes */
-:root {
+[data-theme="pokeball"] {
   --color-main: rgb(170, 11, 11);
   --color-secondary: rgb(253, 246, 246);
-  --color-text-light: rgb(223, 223, 223);
-  --color-accent: rgb(255, 156, 99);
   --color-to-top-button: rgb(31, 31, 31);
-  --color-nav-button-normal: rgb(238, 238, 238);
-  --color-nav-button-highlight: rgb(255, 178, 178);
+  --color-nav-button-normal: rgb(255, 219, 219);
+  --color-nav-button-highlight: rgb(255, 155, 155);
+  --color-container: rgba(255, 255, 255, 0.8);
+}
+
+[data-theme="greatball"] {
+  --color-main: rgb(10, 36, 129);       
+  --color-secondary: rgb(253, 246, 246);
+  --color-to-top-button: rgb(164, 184, 255);
+  --color-nav-button-normal: rgb(224, 26, 26);
+  --color-nav-button-highlight: rgb(241, 124, 124);
+  --color-container: rgba(229, 238, 243, 0.8);
+}
+
+[data-theme="ultraball"] {
+  --color-main: rgb(37, 37, 37);
+  --color-secondary: rgb(253, 246, 246);
+  --color-to-top-button: rgb(78, 78, 78);
+  --color-nav-button-normal: rgb(230, 195, 0);
+  --color-nav-button-highlight: rgb(253, 231, 103);
+  --color-container: rgba(204, 204, 204, 0.8);
+}
+
+[data-theme="masterball"] {
+  --color-main: rgb(96, 6, 170);
+  --color-secondary: rgb(253, 246, 246);
+  --color-to-top-button: rgb(41, 41, 41);
+  --color-nav-button-normal: rgb(252, 21, 202);
+  --color-nav-button-highlight: rgb(255, 141, 230);
+  --color-container: rgba(240, 224, 237, 0.8);
+}
+
+/* Styles for general color */
+
+.c-bg-color {
+  background-color: var(--color-container);
+}
+
+.c-section-header {
+  border-left: 7px solid var(--color-main);
+}
+
+.c-line-separator {
+  background-color: var(--color-nav-button-normal);
 }
 
 /* Styles for pokemon types */

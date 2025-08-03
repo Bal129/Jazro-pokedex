@@ -1,13 +1,14 @@
 <template>
+  <!-- Error screen -->
+  <!-- Only display this screen when there is an error somewhere -->
   <div 
     v-if="errorFlag"
     class="d-flex justify-content-center align-items-center"
     style="height: 100vh;"
   >
-    <!-- Error screen -->
-    <!-- Only display this screen when there is an error somewhere -->
     <ErrorView />
   </div>
+  
   <div v-else>
     <!-- Loading screen -->    
     <!-- By default, v-if is true, it will only change to false when data fetching is done -->
@@ -49,11 +50,11 @@
         </div>
 
         <End />
+        <CustomFooter/> <!-- Component contains standardized footer -->
       </section>
 
       <!-- Other necessary components -->
       <ButtonToTop /> <!-- Component contains button that direct user to top -->
-      <CustomFooter/> <!-- Component contains standardized footer -->
     </div>
   </div>
 </template>
