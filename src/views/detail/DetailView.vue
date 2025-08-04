@@ -143,11 +143,16 @@
         <!-- A row to display locations (contains locaiton names and games) -->
         <div class="row justify-content-center py-4">
           <h4 class="c-section-header text-muted">Edit Store</h4>
-          <div class="p-4 text-center">
-            <div @click="toggleEnableEdit" class="c-edit-button">
-              <i v-if="!enableEdit">Edit </i>
-              <i v-else>Done </i>
-              <i class="fa fa-edit"></i>
+          <div class="d-flex justify-content-center text-center p-4">
+            <div @click="toggleEnableEdit" class="c-btn-edit fw-bold rounded-4 p-3">
+              <span v-if="!enableEdit">
+                Edit
+                <i class="fa fa-edit"></i>
+              </span>
+              <span v-else>
+                Done
+                <i class="fa fa-square-check"></i>
+              </span>
             </div>
           </div>
           <EditStore

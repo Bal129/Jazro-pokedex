@@ -82,9 +82,17 @@ body {
   color: var(--color-nav-button-highlight);
 }
 
-.c-edit-button:hover {
-  transform: scale(1.3);
+.c-btn-edit {
+  color: var(--color-main);
+  background-color: var(--color-nav-button-normal);
+  min-width: 200px;
+  max-width: 500px;
   cursor: pointer;
+}
+
+.c-btn-edit:hover {
+  transform: scale(1.1);
+  
 }
 
 .c-btn-theme {

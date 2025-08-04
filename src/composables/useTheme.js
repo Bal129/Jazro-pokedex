@@ -6,7 +6,6 @@ const themes = ["pokeball", "greatball", "ultraball", "masterball"];
 export function useTheme() {
   const applyTheme = () => {
     document.documentElement.setAttribute("data-theme", theme.value);
-    console.log("Theme applied: " + theme.value);
   }
 
   const loadTheme = () => {

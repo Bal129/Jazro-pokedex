@@ -8,7 +8,16 @@
       <li 
         class="list-group-item text-center"
         v-for="row in props.abilities"
-      >{{ capitalize(row.ability.name) }}</li>
+      >
+        {{ capitalize(row.ability.name) }}
+        <i v-if="!row.is_hidden"></i>
+        <i 
+          v-else class="fa fa-eye-slash"
+          title="Ability is hidden"
+          style="cursor: pointer;"
+        >
+        </i>
+      </li>
     </ul>
   </div>
 </template>
