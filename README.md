@@ -1,6 +1,6 @@
 # Mini Pokedex Project
 
-Welcome to my Mini Pokedex Project. Please take your time here.
+Welcome to my Mini Pokedex Project.
 
 ## About
 
@@ -15,15 +15,63 @@ There are two important pages in the project:
 ### Main Page
 
 Display a list of Pokemon and its simple information in card form.
-![Main Page](./public/ss-mainpage.png)
+
+![Main Page 1](./public/readme/d-menu-1.png)
+![Main Page 2](./public/readme/d-menu-2.png)
 
 User can use a search functionality to filter the Pokemon based on their name.
-![Before](./public/ss-searchbefore.png) --> ![After](./public/ss-searchafter.png)
+![Search 1](./public/readme/d-search-1.png)
+![Search 2](./public/readme/d-search-2.png)
 
 ### Detail Page
 
 Display some information such as Name, Abilities, Stats etc. There is also a navigation bar on top for better user navigating experience.
-![Detail Page](./public/ss-detailpage.png)
+
+<p>
+  <img src="./public/readme/m-detail-1.png" alt="Detail1" height="700" />
+  <img src="./public/readme/m-detail-2.png" alt="Detail2" height="700" />
+  <img src="./public/readme/m-detail-3.png" alt="Detail3" height="700" />
+  <img src="./public/readme/m-detail-4.png" alt="Detail4" height="700" />
+</p>
+
+#### Edit Store
+
+Use Edit Store functionality to temporarily change the data for the current Pokemon page.
+
+<p>
+  <img src="./public/readme/m-detail-5.png" alt="Detail5" height="700" />
+</p>
+
+## Themes
+
+There are four predefined themes for this website. Change the theme by clicking on one of the Pokeball on the bottom left side. The themes are:
+1. Pokeball
+
+<p>
+  <img src="./public/readme/d-menu-1.png" alt="Pokeball1" width="500" />
+  <img src="./public/readme/d-detail-1.png" alt="Pokeball2" width="500" />
+</p>
+
+2. Greatball
+
+<p>
+  <img src="./public/readme/d-menu-color-1.png" alt="Greatball2" width="500" />
+  <img src="./public/readme/d-detail-color-1.png" alt="Greatball1" width="500" />
+</p>
+
+3. Ultraball
+
+<p>
+  <img src="./public/readme/d-menu-color-2.png" alt="Ultraball2" width="500" />
+  <img src="./public/readme/d-detail-color-2.png" alt="Ultraball1" width="500" />
+</p>
+
+4. Masterball
+
+<p>
+  <img src="./public/readme/d-menu-color-3.png" alt="Masterball2" width="500" />
+    <img src="./public/readme/d-detail-color-3.png" alt="Masterball1" width="500" />
+</p>
 
 ## Steps to Run Project Locally
 
